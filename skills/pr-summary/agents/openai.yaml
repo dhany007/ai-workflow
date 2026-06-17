@@ -1,0 +1,7 @@
+interface:
+  display_name: "PR Summary"
+  short_description: "Create PR summary Markdown"
+  default_prompt: "Use $pr-summary to create a Markdown PR summary file from my local feature changes."
+
+policy:
+  allow_implicit_invocation: true

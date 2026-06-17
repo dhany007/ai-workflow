@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review PR"
+  short_description: "Consistent GitHub PR review flow"
+  default_prompt: "Use $review-pr to review GitHub PR URLs with JIRA and context notes."
+
+policy:
+  allow_implicit_invocation: true
