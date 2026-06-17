@@ -13,6 +13,7 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── pr-summary/
     ├── review-feature/
     ├── review-pr/
+    ├── solve-conflict-pr/
     ├── tdd-workflow/
     └── tech-plan/
 ```
@@ -25,6 +26,7 @@ Available skills in the `skills/` directory:
 - `pr-summary`: generates pull request titles and descriptions from local changes.
 - `review-feature`: reviews local changes before a pull request is created.
 - `review-pr`: reviews GitHub pull requests.
+- `solve-conflict-pr`: resolves GitHub pull request merge conflicts and validates the result.
 - `tdd-workflow`: implements backend Go/Rust changes using test-driven development.
 - `tech-plan`: creates backend technical implementation plans before coding.
 

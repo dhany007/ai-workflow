@@ -1,0 +1,7 @@
+interface:
+  display_name: "Solve Conflict PR"
+  short_description: "Resolve GitHub PR merge conflicts"
+  default_prompt: "Use $solve-conflict-pr to resolve merge conflicts for a GitHub pull request and validate the result."
+
+policy:
+  allow_implicit_invocation: true
