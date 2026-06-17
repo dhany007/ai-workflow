@@ -88,6 +88,7 @@ Create a Markdown plan file by default instead of only replying in chat. Prefer 
    - Ask only questions that materially affect implementation.
    - If assumptions are reasonable, state them and proceed with the plan.
 9. Add an implementation handoff:
+   - State that future implementation should use `tdd-workflow` by default.
    - State that future implementation must follow `coding-standard` automatically.
    - Mention Go/Rust format, lint, type-check, and test expectations when relevant.
    - Remind the implementer to keep changes scoped to the approved backend plan.
@@ -136,6 +137,7 @@ Create a Markdown file with this structure by default, then reply with the file 
 - <question or "None">
 
 ## Implementation Handoff
+- When implementing this plan, automatically use `tdd-workflow` for backend Go/Rust changes: write tests first, prove RED, implement minimal code, prove GREEN, then refactor.
 - When implementing this plan, automatically follow `coding-standard` for any Go or Rust code touched.
 - Keep implementation scoped to this backend plan unless the user approves changes outside scope.
 - Run focused format, lint, type-check, and test commands listed in `Test Plan` before finishing when feasible.

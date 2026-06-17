@@ -64,6 +64,7 @@ When implementing Go or Rust features, apply this skill even if the user does no
 
 - If the user says `implement this feature`, `implement this tech plan`, or similar after a `tech-plan`, read the relevant tech plan Markdown file and apply this skill automatically.
 - Treat a `tech-plan` file's `Implementation Handoff` section as an instruction to follow coding standards during implementation.
+- When `tdd-workflow` is active, apply coding standards during the GREEN/refactor stage without skipping RED/GREEN validation.
 - Start from the smallest design that satisfies the requested behavior.
 - Follow the surrounding package/module structure before introducing a new abstraction.
 - Name new types, functions, traits, modules, and packages for their current responsibility, not future possibilities.

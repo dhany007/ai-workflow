@@ -1,0 +1,7 @@
+interface:
+  display_name: "TDD Workflow"
+  short_description: "Backend Go/Rust TDD implementation"
+  default_prompt: "Use $tdd-workflow to implement a backend Go or Rust feature from a tech plan using RED/GREEN/refactor evidence."
+
+policy:
+  allow_implicit_invocation: true
