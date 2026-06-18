@@ -13,6 +13,7 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── pr-summary/
     ├── review-feature/
     ├── review-pr/
+    ├── review-pr-followup/
     ├── solve-conflict-pr/
     ├── tdd-workflow/
     └── tech-plan/
@@ -22,15 +23,48 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
 
 Available skills in the `skills/` directory:
 
-- `coding-standard`: coding standards for Go and Rust projects.
-- `pr-summary`: generates pull request titles and descriptions from local changes.
-- `review-feature`: reviews local changes before a pull request is created.
-- `review-pr`: reviews GitHub pull requests.
-- `solve-conflict-pr`: resolves GitHub pull request merge conflicts and validates the result.
-- `tdd-workflow`: implements backend Go/Rust changes using test-driven development.
-- `tech-plan`: creates backend technical implementation plans before coding.
+- `coding-standard`: applies Go and Rust coding standards for implementation, refactoring, review quality, linting, naming, formatting, and contributor conventions.
+- `pr-summary`: generates a ready-to-paste pull request title and body from local branch or worktree changes, including JIRA/context/release notes when provided.
+- `review-feature`: reviews local feature work before a PR exists by inspecting current branch or worktree diffs against a base branch or commit.
+- `review-pr`: performs first-pass GitHub pull request reviews by inspecting metadata, diffs, comments, unresolved threads, CI status, and relevant code context.
+- `review-pr-followup`: re-reviews a GitHub pull request after the author pushes updates, then verifies whether prior findings are resolved, partially resolved, unresolved, regressed, or need clarification.
+- `solve-conflict-pr`: resolves GitHub pull request merge conflicts by reproducing the conflict locally, preserving behavior from both sides, and running focused validation.
+- `tdd-workflow`: implements backend Go or Rust features, fixes, and refactors with a RED/GREEN/refactor test-driven workflow.
+- `tech-plan`: creates backend-only technical implementation plans before coding, including affected modules, API design when relevant, risks, edge cases, tests, rollout notes, and open questions.
 
 Each skill lives in its own directory and should include at least a `SKILL.md` file.
+
+## Suggested Workflow
+
+These skills are designed to work together across a backend development lifecycle:
+
+```text
+tech-plan
+  -> tdd-workflow
+  -> coding-standard
+  -> review-feature
+  -> pr-summary
+  -> review-pr
+  -> review-pr-followup
+```
+
+Use `solve-conflict-pr` whenever a PR branch cannot be merged cleanly into its target branch.
+
+## Skill Triggers
+
+Each skill can be invoked explicitly by name, for example:
+
+```text
+/tech-plan
+/tdd-workflow
+/review-feature
+/pr-summary
+/review-pr
+/review-pr-followup
+/solve-conflict-pr
+```
+
+Codex can also invoke skills implicitly when the user request matches the skill description.
 
 ## Sync from Local Codex
 

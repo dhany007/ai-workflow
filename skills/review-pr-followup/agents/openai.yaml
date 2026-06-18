@@ -1,0 +1,7 @@
+interface:
+  display_name: "Review PR Follow-up"
+  short_description: "Verify PR review findings were addressed"
+  default_prompt: "Use $review-pr-followup to verify whether previously commented PR review findings were addressed."
+
+policy:
+  allow_implicit_invocation: true
