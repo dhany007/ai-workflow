@@ -1,6 +1,6 @@
 ---
 name: review-pr
-description: Review one or more GitHub pull requests from prompts such as "review-pr", "/review-pr", PR URLs, owner/repo#number references, or a list of PR numbers with optional JIRA links and context. Use when Codex should inspect PR metadata, diffs, review comments, unresolved threads, CI status when relevant, and produce a consistent findings-first code review without modifying code unless explicitly asked.
+description: Review one or more GitHub pull requests from prompts such as "review-pr", "/review-pr", PR URLs, owner/repo#number references, or a list of PR numbers with optional JIRA links and context. Use when Codex should inspect PR metadata, diffs, review comments, unresolved threads, CI status when relevant, apply error-handling when validation/API/database/external-service/timeout/retry/cancellation failure behavior changed, and produce a consistent findings-first code review without modifying code unless explicitly asked.
 ---
 
 # Review PR
@@ -30,9 +30,10 @@ When multiple PRs are provided, review each PR independently, then provide a sho
 1. Identify repository and PR number for each requested PR.
 2. Fetch PR metadata, changed files, diff or patches, discussion comments, review submissions, unresolved review threads, and CI/check status when available.
 3. Read the relevant base and head files when the diff alone is insufficient to understand behavior.
-4. Prioritize risks in this order: correctness bugs, regressions, data loss, security/privacy issues, concurrency/race issues, API contract breaks, migration/backward compatibility issues, missing tests for risky behavior, then maintainability.
-5. Verify whether existing tests cover the changed behavior. If local verification is useful and feasible, run focused tests. If tests are not run, state that clearly.
-6. Do not edit files, push commits, request reviewers, approve, merge, label, or comment on GitHub unless the user explicitly asks for that action.
+4. Apply `error-handling` when the PR changes validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior.
+5. Prioritize risks in this order: correctness bugs, regressions, data loss, security/privacy issues, concurrency/race issues, API contract breaks, migration/backward compatibility issues, missing tests for risky behavior, then maintainability.
+6. Verify whether existing tests cover the changed behavior. If local verification is useful and feasible, run focused tests. If tests are not run, state that clearly.
+7. Do not edit files, push commits, request reviewers, approve, merge, label, or comment on GitHub unless the user explicitly asks for that action.
 
 ## Output Format
 
@@ -91,3 +92,5 @@ Be specific and evidence-based. Do not report speculative issues unless there is
 Treat user context such as `context: group member list projection` as the intended behavior lens: check whether the implementation matches that intent, whether edge cases are handled, and whether tests prove the intended projection behavior.
 
 When a PR touches generated files, lockfiles, migrations, schemas, or cross-repository contracts, call that out explicitly because these often require separate validation.
+
+For error behavior changes, include `error-handling` findings when they represent concrete swallowed errors, false success, wrong client status/code, leaked internal detail, unsafe retry behavior, missing timeout/cancellation handling, missing error context, noisy or unsafe logs, or missing tests for important failure paths.

@@ -66,6 +66,7 @@ When implementing Go or Rust features, apply this skill even if the user does no
 - Treat a `tech-plan` file's `Implementation Handoff` section as an instruction to follow coding standards during implementation.
 - When `tdd-workflow` is active, apply coding standards during the GREEN/refactor stage without skipping RED/GREEN validation.
 - For Go implementation and review, use `go-patterns` for idiomatic error handling, context propagation, interface/package design, dependency injection, concurrency, zero-value design, tests, performance tradeoffs, and anti-patterns.
+- For changed validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior, use `error-handling` for classification, propagation, boundary mapping, retry safety, logging privacy, and error-path tests.
 - For Go linting, use `go-lint-workflow`: prefer scoped or baseline-aware lint, do not assign unrelated legacy lint debt to the current feature, and handle `gocyclo`/`funlen` pragmatically.
 - For Go build, test, vet, module, or lint failures during implementation, use `go-build-resolver` to make minimal scoped fixes before broad cleanup.
 - For Rust implementation and review, use `rust-patterns` for ownership, borrowing, error handling, enums/state modeling, traits/generics, module visibility, async/concurrency, unsafe boundaries, testing patterns, and performance tradeoffs.

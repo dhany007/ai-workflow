@@ -78,6 +78,7 @@ If the user asks to post follow-up comments, only post comments for findings tha
    - Read the current diff and relevant files around the commented code.
    - Compare the author's changes to the original finding.
    - Verify the fix addresses the actual failure mode, not only the surface symptom.
+   - Apply `error-handling` when the original finding or follow-up commit involves validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, or observable failure behavior.
    - Check whether tests were added or updated for the finding when the risk warrants it.
    - Look for regressions introduced by the fix in nearby behavior.
 

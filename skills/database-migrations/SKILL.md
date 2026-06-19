@@ -34,6 +34,8 @@ Use this skill for:
 
 Use `postgres-patterns` for PostgreSQL/Supabase engine details and `mysql-patterns` for MySQL/MariaDB engine details.
 
+Use `error-handling` when a migration, backfill, rollback, queue claim, transaction, or rollout plan needs explicit failure classification, retry safety, timeout/cancellation handling, operational error reporting, or privacy-safe logging.
+
 ## Core Rules
 
 1. Every production database change must live in a migration or approved migration workflow.

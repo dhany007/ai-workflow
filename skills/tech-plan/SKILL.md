@@ -1,6 +1,6 @@
 ---
 name: tech-plan
-description: Create a backend-only technical implementation plan as a Markdown file before coding from prompts such as "tech-plan", "/tech-plan", "create tech plan", "plan this backend feature", "design backend implementation", or "analyze before implement". Use when Codex should read project memory folders such as "*-memory-system", inspect requirements and backend code, include API design when applicable, apply database-migrations when schema/data migration or zero-downtime rollout planning is involved, apply mysql-patterns when MySQL/MariaDB schema/query/transaction/pool changes are involved, apply postgres-patterns when PostgreSQL/Supabase schema/query/transaction/RLS/pool changes are involved, identify affected backend modules, risks, edge cases, test strategy, rollout notes, and open questions. The only allowed file write is the Markdown plan file; do not modify source, test, config, migration, generated, lock, or dependency files unless the user explicitly asks to implement after the plan.
+description: Create a backend-only technical implementation plan as a Markdown file before coding from prompts such as "tech-plan", "/tech-plan", "create tech plan", "plan this backend feature", "design backend implementation", or "analyze before implement". Use when Codex should read project memory folders such as "*-memory-system", inspect requirements and backend code, include API design when applicable, apply error-handling when validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior are involved, apply api-contract-review when client-observable API behavior changes, apply observability-check when operationally important endpoints, workers, external calls, migrations/backfills, critical flows, retries, or concurrency are involved, apply database-migrations when schema/data migration or zero-downtime rollout planning is involved, apply mysql-patterns when MySQL/MariaDB schema/query/transaction/pool changes are involved, apply postgres-patterns when PostgreSQL/Supabase schema/query/transaction/RLS/pool changes are involved, identify affected backend modules, risks, edge cases, test strategy, rollout notes, and open questions. The only allowed file write is the Markdown plan file; do not modify source, test, config, migration, generated, lock, or dependency files unless the user explicitly asks to implement after the plan.
 ---
 
 # Tech Plan
@@ -72,6 +72,8 @@ Create a Markdown plan file by default instead of only replying in chat. Prefer 
    - Propose a simple approach that satisfies the requirement.
    - Break work into ordered implementation tasks.
    - Include data model, state, validation, error handling, concurrency, performance, and backward compatibility considerations when relevant.
+   - If validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior are involved, apply `error-handling` and include error classification, boundary mapping, retry/timeout/cancellation behavior, privacy-safe logging, and error-path tests.
+   - If operationally important endpoints, workers, jobs, external calls, migrations/backfills, retries, or concurrency are involved, apply `observability-check` and include logging/metrics/tracing/telemetry expectations plus PII/secret safety.
    - If schema changes, data backfills, rollback planning, or zero-downtime rollout are involved, apply `database-migrations` and include migration phase, lock risk, rollback/forward-fix plan, and validation.
    - If MySQL/MariaDB schema, query, index, transaction, replica, or pool behavior is touched, apply `mysql-patterns` and include engine/version assumptions plus migration/query validation.
    - If PostgreSQL/Supabase schema, query, index, transaction, RLS, replica, or pool behavior is touched, apply `postgres-patterns` and include version/extension assumptions plus migration/query/RLS validation.
@@ -80,6 +82,7 @@ Create a Markdown plan file by default instead of only replying in chat. Prefer 
    - Request shape, response shape, validation rules, and error model.
    - Auth, permissions, tenancy, idempotency, pagination, filtering, and sorting when relevant.
    - Backward compatibility, versioning, generated clients, and contract tests when relevant.
+   - If client-observable API behavior changes, apply `api-contract-review` and classify the change as no contract change, additive compatible change, behavior fix with client impact, or breaking change.
 6. Include test and validation plan:
    - Unit, integration, API contract, migration, regression, worker/job, and backend service tests as appropriate.
    - Focused commands to run.
@@ -146,6 +149,9 @@ Create a Markdown file with this structure by default, then reply with the file 
 - For Rust changes, automatically apply `rust-patterns` for idiomatic backend design and implementation.
 - For Go changes, use `go-lint-workflow` for scoped or baseline-aware lint; for Rust changes, use `rust-lint-workflow` for scoped cargo fmt/check/clippy/test validation.
 - If Go validation fails during implementation, use `go-build-resolver` for minimal scoped fixes. If Rust validation fails, use `rust-build-resolver`.
+- For validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior, use `error-handling` for error classification, propagation, boundary mapping, retry safety, logging privacy, and error-path tests.
+- For API request, response, error, auth, pagination, idempotency, or generated contract changes, use `api-contract-review` for compatibility and contract-test validation.
+- For operationally important endpoints, workers, jobs, external calls, migrations/backfills, critical flows, retries, or concurrency, use `observability-check` for logging, metrics, tracing/telemetry, error context, and PII/secret safety.
 - For schema changes, data migrations, backfills, or zero-downtime rollout, use `database-migrations` for migration safety, expand-contract planning, rollback/forward-fix strategy, and validation.
 - For MySQL/MariaDB changes, use `mysql-patterns` for schema, query, index, transaction, replication, pool, security, and migration validation.
 - For PostgreSQL/Supabase changes, use `postgres-patterns` for schema, query, index, transaction, RLS, replication, pool, security, and migration validation.
@@ -164,6 +170,9 @@ Prioritize simplicity and maintainability:
 - Follow existing project conventions unless there is a concrete reason to diverge.
 - Surface tradeoffs clearly when multiple approaches are viable.
 - Treat migrations, schemas, generated files, API contracts, and cross-repository changes as high-attention areas.
+- For API designs that change client-observable behavior, apply `api-contract-review` for request/response shape, error model, validation, auth/tenancy, pagination/filter/sort, idempotency, generated artifacts, backward compatibility, and contract tests.
+- For backend designs that touch validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior, apply `error-handling` for error classification, propagation, API/client boundary mapping, retry safety, timeout/cancellation handling, and error-path tests.
+- For operationally important backend designs, apply `observability-check` for logging, metrics, tracing/telemetry, correlation context, dashboard/alert impact, and sensitive-data redaction.
 - For schema/data migration designs, apply `database-migrations` for migration immutability, phased rollout, lock safety, backfill batching, compatibility, rollback/forward-fix planning, and validation.
 - For MySQL/MariaDB designs, apply `mysql-patterns` for engine/version assumptions, migration safety, indexing, query plans, locking/deadlocks, replica consistency, connection pools, and least-privilege access.
 - For PostgreSQL/Supabase designs, apply `postgres-patterns` for version/extension assumptions, migration safety, indexing, query plans, locks/deadlocks, RLS/security, replica consistency, connection pools, and least-privilege access.

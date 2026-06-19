@@ -9,13 +9,21 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
 ├── scripts/
 │   └── sync-from-codex.sh
 └── skills/
+    ├── api-contract-review/
     ├── coding-standard/
+    ├── database-migrations/
+    ├── error-handling/
+    ├── go-build-resolver/
     ├── go-lint-workflow/
     ├── go-patterns/
+    ├── mysql-patterns/
+    ├── observability-check/
+    ├── postgres-patterns/
     ├── pr-summary/
     ├── review-feature/
     ├── review-pr/
     ├── review-pr-followup/
+    ├── rust-build-resolver/
     ├── rust-lint-workflow/
     ├── rust-patterns/
     ├── solve-conflict-pr/
@@ -27,18 +35,26 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
 
 Available skills in the `skills/` directory:
 
+- `api-contract-review`: reviews backend API compatibility for endpoints, request and response shapes, status codes, error models, validation, auth or tenant boundaries, pagination, versioning, generated contracts, and contract tests.
 - `coding-standard`: applies Go and Rust coding standards for implementation, refactoring, review quality, naming, formatting, linting setup, and contributor conventions. It also coordinates Go/Rust pattern and lint workflow skills when relevant.
+- `database-migrations`: applies production-safe migration practices for PostgreSQL, MySQL/MariaDB, and common ORM migration tools, including rollout, rollback, backfills, indexes, constraints, and zero-downtime changes.
+- `error-handling`: reviews and designs backend error behavior for validation, auth, database, external service, timeout, retry, worker, transaction, and observable failure paths.
+- `go-build-resolver`: diagnoses and fixes scoped Go build, test, vet, module, lint, compile, and `golangci-lint` failures without broad unrelated refactors.
 - `go-lint-workflow`: runs and interprets scoped Go linting with `golangci-lint`, `go vet`, and `go fmt`, while separating new issues from existing baseline debt.
 - `go-patterns`: applies idiomatic Go backend patterns for error handling, context propagation, interfaces, packages, dependency injection, concurrency, testing, and performance tradeoffs.
+- `mysql-patterns`: applies MySQL and MariaDB production patterns for schema design, migrations, indexes, query performance, transactions, locks, replicas, connection pools, and operational validation.
+- `observability-check`: reviews backend logging, metrics, tracing, error context, cardinality, dashboard or alert hooks, and PII or secret leakage risks for operationally important changes.
+- `postgres-patterns`: applies PostgreSQL and Supabase production patterns for schema design, migrations, indexes, query plans, keyset pagination, JSONB, full-text search, transactions, locks, RLS, replicas, and security.
 - `pr-summary`: generates a ready-to-paste pull request title and body from local branch or worktree changes, including JIRA/context/release notes when provided.
-- `review-feature`: reviews local feature work before a PR exists by inspecting branch or worktree diffs, applying coding standards, Go/Rust patterns, and scoped lint workflow guidance.
-- `review-pr`: performs first-pass GitHub pull request reviews by inspecting metadata, diffs, comments, unresolved threads, CI status, and relevant code context.
+- `review-feature`: reviews local feature work before a PR exists by inspecting branch or worktree diffs, applying coding standards, language patterns, lint workflows, error handling, API contracts, observability, and database safety where relevant.
+- `review-pr`: performs first-pass GitHub pull request reviews by inspecting metadata, diffs, comments, unresolved threads, CI status, relevant code context, and changed error behavior where relevant.
 - `review-pr-followup`: re-reviews a GitHub pull request after the author pushes updates, then verifies whether prior findings are resolved, partially resolved, unresolved, regressed, or need clarification.
+- `rust-build-resolver`: diagnoses and fixes scoped Rust `cargo check`, build, test, clippy, dependency, feature, lifetime, borrow-checker, and `Cargo.toml` failures without broad unrelated refactors.
 - `rust-lint-workflow`: runs and interprets scoped Rust validation with `cargo fmt`, `cargo check`, `cargo clippy`, and tests, while separating new warnings from existing workspace debt.
 - `rust-patterns`: applies idiomatic Rust backend patterns for ownership, borrowing, errors, enums, traits, modules, async/concurrency, unsafe boundaries, testing, and performance tradeoffs.
 - `solve-conflict-pr`: resolves GitHub pull request merge conflicts by reproducing the conflict locally, preserving behavior from both sides, and running focused validation.
-- `tdd-workflow`: implements backend Go or Rust features, fixes, and refactors with a RED/GREEN/refactor test-driven workflow, using language-specific pattern and lint skills during implementation and validation.
-- `tech-plan`: creates backend-only technical implementation plans before coding, including affected modules, API design when relevant, risks, edge cases, tests, rollout notes, and open questions.
+- `tdd-workflow`: implements backend Go or Rust features, fixes, and refactors with a RED/GREEN/refactor test-driven workflow, using language-specific patterns, error handling guidance, lint workflows, and build resolvers during implementation and validation.
+- `tech-plan`: creates backend-only technical implementation plans before coding, including affected modules, API design, error behavior, observability, migrations, database patterns, risks, edge cases, tests, rollout notes, and open questions.
 
 Each skill lives in its own directory and should include at least a `SKILL.md` file.
 
@@ -62,14 +78,21 @@ tdd-workflow
   -> coding-standard
      -> go-patterns / rust-patterns
      -> go-lint-workflow / rust-lint-workflow
+     -> go-build-resolver / rust-build-resolver
+  -> error-handling
 ```
 
 Use `solve-conflict-pr` whenever a PR branch cannot be merged cleanly into its target branch.
 
-Use language-specific skills directly when the task is focused on one layer:
+Use focused skills directly when the task is centered on one layer:
 
 - `go-patterns` or `rust-patterns` for idiomatic design and implementation guidance.
 - `go-lint-workflow` or `rust-lint-workflow` for scoped formatting, linting, and validation.
+- `go-build-resolver` or `rust-build-resolver` when validation fails and needs a minimal fix.
+- `api-contract-review` when client-observable API behavior changes.
+- `database-migrations`, `postgres-patterns`, or `mysql-patterns` for schema, query, transaction, and rollout work.
+- `error-handling` when failure behavior, retries, timeouts, transactions, or API errors change.
+- `observability-check` when a change affects production debugging, logging, metrics, tracing, alerts, workers, external calls, or critical flows.
 
 ## Skill Triggers
 
@@ -79,10 +102,18 @@ Each skill can be invoked explicitly by name, for example:
 /tech-plan
 /tdd-workflow
 /coding-standard
+/api-contract-review
+/database-migrations
+/error-handling
 /go-patterns
 /go-lint-workflow
+/go-build-resolver
+/mysql-patterns
+/observability-check
+/postgres-patterns
 /rust-patterns
 /rust-lint-workflow
+/rust-build-resolver
 /review-feature
 /pr-summary
 /review-pr

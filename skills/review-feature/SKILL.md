@@ -1,6 +1,6 @@
 ---
 name: review-feature
-description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current git branch/worktree diff, compare it with a base branch or commit, read relevant files and tests, apply coding-standard plus go-patterns for Go code, rust-patterns for Rust code, go-lint-workflow or rust-lint-workflow for changed Go/Rust files, database-migrations for schema/data migration or zero-downtime rollout changes, mysql-patterns for MySQL/MariaDB schema/query/transaction/pool changes, and postgres-patterns for PostgreSQL/Supabase schema/query/transaction/RLS/pool changes, produce a review in the same findings-first format as review-pr, and optionally resolve discovered findings in the local code when the user explicitly asks to fix/resolve them.
+description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current git branch/worktree diff, compare it with a base branch or commit, read relevant files and tests, apply coding-standard plus go-patterns for Go code, rust-patterns for Rust code, go-lint-workflow or rust-lint-workflow for changed Go/Rust files, error-handling for changed validation/API/database/external-service/timeout/retry/cancellation failure behavior, api-contract-review for client-observable API behavior changes, observability-check for operationally important endpoints/workers/external calls/migrations/critical flows/retries/concurrency, database-migrations for schema/data migration or zero-downtime rollout changes, mysql-patterns for MySQL/MariaDB schema/query/transaction/pool changes, and postgres-patterns for PostgreSQL/Supabase schema/query/transaction/RLS/pool changes, produce a review in the same findings-first format as review-pr, and optionally resolve discovered findings in the local code when the user explicitly asks to fix/resolve them.
 ---
 
 # Review Feature
@@ -39,6 +39,9 @@ Determine review scope from the prompt:
    - For Go changes, use `go-lint-workflow` to distinguish new lint issues from existing baseline debt and to handle `*_test.go`, `gocyclo`, and `funlen` pragmatically.
    - For Rust changes, use `rust-patterns` to review ownership, borrowing, error handling, state modeling, trait/API boundaries, visibility, async/concurrency lifecycle, unsafe boundaries, testing patterns, and performance tradeoffs.
    - For Rust changes, use `rust-lint-workflow` to distinguish new Clippy/check issues from existing workspace debt and to handle unit/integration tests, complexity, public API, and `#[allow(...)]` pragmatically.
+   - For validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior, use `error-handling` to review classification, propagation, boundary mapping, retry safety, logging privacy, and error-path test coverage.
+   - For client-observable API request, response, error, auth, pagination, idempotency, or generated contract changes, use `api-contract-review` to review backward compatibility and contract-test coverage.
+   - For operationally important endpoints, workers, jobs, external calls, migrations/backfills, critical flows, retries, or concurrency, use `observability-check` to review production debuggability, logs, metrics, tracing/telemetry, and PII/secret safety.
    - For schema changes, data migrations, backfills, or zero-downtime rollout, use `database-migrations` to review migration immutability, lock risk, expand-contract compatibility, rollback/forward-fix strategy, and validation.
    - For MySQL/MariaDB changes, use `mysql-patterns` to review migration safety, schema defaults, indexes, query plans, transactions, locking, replica consistency, connection pools, and least-privilege security.
    - For PostgreSQL/Supabase changes, use `postgres-patterns` to review migration safety, schema defaults, indexes, query plans, transactions, locking, RLS policies, replica consistency, connection pools, and least-privilege security.
@@ -122,6 +125,12 @@ Be specific and evidence-based. Do not report speculative issues unless there is
 Treat user context such as `context: group member list projection` as the intended behavior lens: check whether the implementation matches that intent, whether edge cases are handled, and whether tests prove the intended behavior.
 
 When a feature touches generated files, lockfiles, migrations, schemas, or cross-repository contracts, call that out explicitly because these often require separate validation.
+
+For API contract changes, include `api-contract-review` findings when they represent concrete client breakage, backward compatibility, error model, validation, auth/tenancy, pagination/filter/sort, idempotency, generated contract, or missing contract-test risk.
+
+For error behavior changes, include `error-handling` findings when they represent concrete swallowed errors, false success, wrong client status/code, leaked internal detail, unsafe retry behavior, missing timeout/cancellation handling, missing error context, noisy or unsafe logs, or missing tests for important failure paths.
+
+For observability changes or operationally important behavior, include `observability-check` findings when they represent concrete production debugging, missing failure/progress signal, metric cardinality, dashboard/alert compatibility, noisy logging, or PII/secret leakage risk.
 
 For migration changes, include `database-migrations` findings when they represent concrete lock, data loss, backward compatibility, rollout, rollback, backfill, dirty-state, or migration drift risk.
 

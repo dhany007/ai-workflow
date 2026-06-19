@@ -63,6 +63,9 @@ If the feature needs code cleanup before PR, describe it as a note in the Markdo
 4. Identify tests added, updated, or run in the current session. Do not invent test results.
 5. Identify Go/Rust lint validation that was run in the current session, including `go-lint-workflow` or `rust-lint-workflow` results. Do not run formatters or linters that rewrite files during `pr-summary`.
 6. Note migrations, schema changes, generated files, lockfiles, API contracts, feature flags, configuration changes, and frontend screenshots/recordings if relevant.
+   - For changed validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior, include `error-handling` notes such as error classification, status/code mapping, retry/timeout behavior, privacy-safe logging, and error-path test status when known.
+   - For client-observable API behavior changes, include `api-contract-review` notes such as compatibility classification, request/response/error/auth/pagination/idempotency changes, generated contract updates, and contract-test status when known.
+   - For operationally important endpoints, workers, jobs, external calls, migrations/backfills, critical flows, retries, or concurrency, include `observability-check` notes such as logging/metrics/tracing changes, PII/secret safety, dashboard/alert impact, and production debugging gaps when known.
    - For schema changes, data migrations, backfills, or zero-downtime rollout, include `database-migrations` notes such as migration phase, lock risk, rollout order, rollback/forward-fix strategy, dry run, and validation status when known.
    - For MySQL/MariaDB changes, include `mysql-patterns` validation notes such as engine/version assumptions, `EXPLAIN`, migration dry run, lock/deadlock risk, rollback criteria, or replica/pool considerations when known.
    - For PostgreSQL/Supabase changes, include `postgres-patterns` validation notes such as version/extension assumptions, `EXPLAIN`, migration dry run, lock/deadlock risk, RLS policy validation, rollback criteria, or replica/pool considerations when known.
@@ -103,6 +106,9 @@ Title: <imperative or concise feature title>
 
 ## Risk / Rollout
 - <migration, compatibility, release, feature flag, or operational notes>
+- <api-contract-review compatibility/request/response/error/auth/pagination/generated-client notes, if relevant>
+- <error-handling classification/status-code/retry/timeout/error-path-test notes, if relevant>
+- <observability-check logging/metrics/tracing/PII/dashboard notes, if relevant>
 - <database-migrations phase/lock/backfill/rollback validation notes, if relevant>
 - <MySQL/MariaDB migration/query/index/transaction/replica/pool notes, if relevant>
 - <PostgreSQL/Supabase migration/query/index/transaction/RLS/replica/pool notes, if relevant>
