@@ -1,0 +1,7 @@
+interface:
+  display_name: "Go Patterns"
+  short_description: "Idiomatic Go backend patterns"
+  default_prompt: "Use $go-patterns to implement or review Go backend code with idiomatic patterns."
+
+policy:
+  allow_implicit_invocation: true

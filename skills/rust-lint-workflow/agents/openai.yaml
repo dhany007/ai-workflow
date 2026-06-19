@@ -1,0 +1,7 @@
+interface:
+  display_name: "Rust Lint Workflow"
+  short_description: "Pragmatic cargo clippy workflow"
+  default_prompt: "Use $rust-lint-workflow to run and interpret scoped Rust lint checks without treating existing debt as new findings."
+
+policy:
+  allow_implicit_invocation: true

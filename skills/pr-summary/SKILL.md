@@ -61,9 +61,10 @@ If the feature needs code cleanup before PR, describe it as a note in the Markdo
 2. Inspect git status and diff for the feature scope.
 3. Read relevant files when the diff alone is insufficient to explain the behavior.
 4. Identify tests added, updated, or run in the current session. Do not invent test results.
-5. Note migrations, schema changes, generated files, lockfiles, API contracts, feature flags, configuration changes, and frontend screenshots/recordings if relevant.
-6. Produce a clear PR title and body in a Markdown file. Do not create a PR, push commits, label, request reviewers, or post to GitHub unless the user explicitly asks.
-7. Before finishing, confirm that no source/test/config/migration/generated/dependency files were modified. If any were modified accidentally, stop and report the exact files instead of continuing.
+5. Identify Go/Rust lint validation that was run in the current session, including `go-lint-workflow` or `rust-lint-workflow` results. Do not run formatters or linters that rewrite files during `pr-summary`.
+6. Note migrations, schema changes, generated files, lockfiles, API contracts, feature flags, configuration changes, and frontend screenshots/recordings if relevant.
+7. Produce a clear PR title and body in a Markdown file. Do not create a PR, push commits, label, request reviewers, or post to GitHub unless the user explicitly asks.
+8. Before finishing, confirm that no source/test/config/migration/generated/dependency files were modified. If any were modified accidentally, stop and report the exact files instead of continuing.
 
 ## Output Format
 
@@ -92,6 +93,10 @@ Title: <imperative or concise feature title>
 ## Tests
 - <tests run, with exact commands when known>
 - <tests not run, if any, and why>
+
+## Lint
+- <go-lint-workflow / rust-lint-workflow result, scoped command, or "Not run">
+- <new lint issues vs existing debt, if relevant>
 
 ## Risk / Rollout
 - <migration, compatibility, release, feature flag, or operational notes>

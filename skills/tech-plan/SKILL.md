@@ -139,6 +139,9 @@ Create a Markdown file with this structure by default, then reply with the file 
 ## Implementation Handoff
 - When implementing this plan, automatically use `tdd-workflow` for backend Go/Rust changes: write tests first, prove RED, implement minimal code, prove GREEN, then refactor.
 - When implementing this plan, automatically follow `coding-standard` for any Go or Rust code touched.
+- For Go changes, automatically apply `go-patterns` for idiomatic backend design and implementation.
+- For Rust changes, automatically apply `rust-patterns` for idiomatic backend design and implementation.
+- For Go changes, use `go-lint-workflow` for scoped or baseline-aware lint; for Rust changes, use `rust-lint-workflow` for scoped cargo fmt/check/clippy/test validation.
 - Keep implementation scoped to this backend plan unless the user approves changes outside scope.
 - Run focused format, lint, type-check, and test commands listed in `Test Plan` before finishing when feasible.
 ```
@@ -155,6 +158,8 @@ Prioritize simplicity and maintainability:
 - Surface tradeoffs clearly when multiple approaches are viable.
 - Treat migrations, schemas, generated files, API contracts, and cross-repository changes as high-attention areas.
 - For Go and Rust code, apply `coding-standard` expectations during planning: readability, KISS, DRY, YAGNI, idiomatic naming, formatting, error handling, visibility, linting, type-checking, and tests.
+- For Go backend designs, apply `go-patterns` for error handling, context propagation, interface boundaries, package ownership, dependency injection, concurrency lifecycle, zero-value design, testability, and performance tradeoffs.
+- For Rust backend designs, apply `rust-patterns` for ownership and borrowing, error handling, state modeling, traits/generics, module visibility, async/concurrency lifecycle, unsafe boundaries, testability, and performance tradeoffs.
 - Keep frontend concerns out of the plan unless explicitly requested. If backend changes require frontend follow-up, list it as an integration note, not as implementation scope.
 
 If the user asks to continue after the plan, implement in a separate step using the approved plan and keep changes scoped to that plan.

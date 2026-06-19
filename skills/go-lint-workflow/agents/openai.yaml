@@ -1,0 +1,7 @@
+interface:
+  display_name: "Go Lint Workflow"
+  short_description: "Pragmatic golangci-lint workflow"
+  default_prompt: "Use $go-lint-workflow to run and interpret scoped Go lint checks without treating existing debt as new findings."
+
+policy:
+  allow_implicit_invocation: true

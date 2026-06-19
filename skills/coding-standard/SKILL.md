@@ -1,6 +1,6 @@
 ---
 name: coding-standard
-description: Apply coding standards for Go and Rust projects from prompts such as "coding-standard", "/coding-standard", "implement this feature", "implement this tech plan", "continue from tech-plan", "implement a Go feature", "implement a Rust feature", "review code quality", "refactor to coding standard", "set up linting", "enforce naming conventions", or "onboard contributors". Use implicitly when Codex is creating, modifying, reviewing, or refactoring Go or Rust code, especially after a tech-plan Markdown file exists, for new features/modules, code quality and maintainability review, naming/formatting/structural consistency, linting/formatting/type-checking setup, or contributor convention guidance.
+description: Apply coding standards for Go and Rust projects from prompts such as "coding-standard", "/coding-standard", "implement this feature", "implement this tech plan", "continue from tech-plan", "implement a Go feature", "implement a Rust feature", "review code quality", "refactor to coding standard", "set up linting", "enforce naming conventions", or "onboard contributors". Use implicitly when Codex is creating, modifying, reviewing, or refactoring Go or Rust code, especially after a tech-plan Markdown file exists, for new features/modules, code quality and maintainability review, naming/formatting/structural consistency, linting/formatting/type-checking setup, contributor convention guidance, Go idioms via go-patterns, Rust idioms via rust-patterns, and scoped lint workflows via go-lint-workflow or rust-lint-workflow.
 ---
 
 # Coding Standard
@@ -65,6 +65,10 @@ When implementing Go or Rust features, apply this skill even if the user does no
 - If the user says `implement this feature`, `implement this tech plan`, or similar after a `tech-plan`, read the relevant tech plan Markdown file and apply this skill automatically.
 - Treat a `tech-plan` file's `Implementation Handoff` section as an instruction to follow coding standards during implementation.
 - When `tdd-workflow` is active, apply coding standards during the GREEN/refactor stage without skipping RED/GREEN validation.
+- For Go implementation and review, use `go-patterns` for idiomatic error handling, context propagation, interface/package design, dependency injection, concurrency, zero-value design, tests, performance tradeoffs, and anti-patterns.
+- For Go linting, use `go-lint-workflow`: prefer scoped or baseline-aware lint, do not assign unrelated legacy lint debt to the current feature, and handle `gocyclo`/`funlen` pragmatically.
+- For Rust implementation and review, use `rust-patterns` for ownership, borrowing, error handling, enums/state modeling, traits/generics, module visibility, async/concurrency, unsafe boundaries, testing patterns, and performance tradeoffs.
+- For Rust linting, use `rust-lint-workflow`: prefer package-scoped `cargo check/test/clippy`, avoid broad API/visibility refactors for existing Clippy debt, and handle test code with readability-aware judgment.
 - Start from the smallest design that satisfies the requested behavior.
 - Follow the surrounding package/module structure before introducing a new abstraction.
 - Name new types, functions, traits, modules, and packages for their current responsibility, not future possibilities.
@@ -77,6 +81,7 @@ When implementing Go or Rust features, apply this skill even if the user does no
 
 Use idiomatic Go:
 
+- Apply `go-patterns` when designing or reviewing Go backend behavior.
 - Format with `gofmt` or `go fmt`.
 - Use `go vet` where applicable.
 - Prefer simple package names: short, lowercase, no underscores.
@@ -92,17 +97,19 @@ Use idiomatic Go:
 For Go validation, prefer:
 
 ```bash
-go fmt ./...
-go vet ./...
-go test ./...
+go fmt ./path/to/changed/package
+go vet ./path/to/changed/package
+go test ./path/to/changed/package
+golangci-lint run ./path/to/changed/package
 ```
 
-Use narrower package/test commands when the repository is large or the user asks for focused validation.
+Use `golangci-lint run --new-from-rev=<base-ref>` when reviewing PR/new branch changes. Use full repo commands only for CI, dedicated cleanup, or explicit user request. See `go-lint-workflow` for baseline-aware lint decisions, test-file rules, and `//nolint` standards.
 
 ## Rust Standards
 
 Use idiomatic Rust:
 
+- Apply `rust-patterns` when designing or reviewing Rust backend behavior.
 - Format with `cargo fmt`.
 - Use `cargo clippy` and address meaningful warnings.
 - Use `cargo check` for fast type-checking and `cargo test` for validation.
@@ -119,13 +126,13 @@ Use idiomatic Rust:
 For Rust validation, prefer:
 
 ```bash
-cargo fmt
-cargo clippy --all-targets --all-features
-cargo check
-cargo test
+cargo fmt -p <package>
+cargo clippy -p <package> --all-targets
+cargo check -p <package>
+cargo test -p <package>
 ```
 
-Use narrower package/test commands when the repository is large or feature flags make full validation expensive.
+Use full workspace/all-features commands only for CI, dedicated cleanup, or explicit user request. See `rust-lint-workflow` for scoped Clippy decisions, test-code rules, and `#[allow(...)]` standards.
 
 ## Review Output
 

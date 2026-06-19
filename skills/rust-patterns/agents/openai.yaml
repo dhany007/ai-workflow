@@ -1,0 +1,7 @@
+interface:
+  display_name: "Rust Patterns"
+  short_description: "Idiomatic Rust backend patterns"
+  default_prompt: "Use $rust-patterns to implement or review Rust backend code with idiomatic ownership, errors, traits, and async patterns."
+
+policy:
+  allow_implicit_invocation: true

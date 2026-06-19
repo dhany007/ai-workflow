@@ -1,6 +1,6 @@
 ---
 name: review-feature
-description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current git branch/worktree diff, compare it with a base branch or commit, read relevant files and tests, produce a review in the same findings-first format as review-pr, and optionally resolve discovered findings in the local code when the user explicitly asks to fix/resolve them.
+description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current git branch/worktree diff, compare it with a base branch or commit, read relevant files and tests, apply coding-standard plus go-patterns for Go code, rust-patterns for Rust code, and go-lint-workflow or rust-lint-workflow for changed Go/Rust files, produce a review in the same findings-first format as review-pr, and optionally resolve discovered findings in the local code when the user explicitly asks to fix/resolve them.
 ---
 
 # Review Feature
@@ -35,6 +35,10 @@ Determine review scope from the prompt:
 3. Read relevant base and working-tree files when the diff alone is insufficient to understand behavior.
 4. Inspect existing tests and coverage around the changed behavior.
 5. Apply `coding-standard` expectations for changed Go and Rust files: readability, KISS, DRY, YAGNI, naming, formatting, structure, idiomatic error handling, visibility, linting, and type-checking.
+   - For Go changes, use `go-patterns` to review error handling, context propagation, interface boundaries, package ownership, dependency injection, concurrency lifecycle, testing patterns, and performance tradeoffs.
+   - For Go changes, use `go-lint-workflow` to distinguish new lint issues from existing baseline debt and to handle `*_test.go`, `gocyclo`, and `funlen` pragmatically.
+   - For Rust changes, use `rust-patterns` to review ownership, borrowing, error handling, state modeling, trait/API boundaries, visibility, async/concurrency lifecycle, unsafe boundaries, testing patterns, and performance tradeoffs.
+   - For Rust changes, use `rust-lint-workflow` to distinguish new Clippy/check issues from existing workspace debt and to handle unit/integration tests, complexity, public API, and `#[allow(...)]` pragmatically.
 6. Prioritize risks in this order: correctness bugs, regressions, data loss, security/privacy issues, concurrency/race issues, API contract breaks, migration/backward compatibility issues, missing tests for risky behavior, then maintainability and coding-standard drift.
 7. Run focused local validation when feasible and useful. If tests are not run, state that clearly.
 8. Do not push commits, create PRs, post comments, merge, or label anything unless the user explicitly asks.
@@ -118,4 +122,15 @@ When a feature touches generated files, lockfiles, migrations, schemas, or cross
 
 When reviewing local changes, pay extra attention to artifacts that would normally be caught during PR review: forgotten debug code, untracked files, missing generated updates, stale snapshots, accidental environment changes, and incomplete test updates.
 
-For Go and Rust changes, include coding-standard findings when they are meaningful for maintainability or reviewer confidence. Avoid reporting pure formatting nits if `gofmt`, `go fmt`, `cargo fmt`, or an equivalent formatter can handle them.
+For Go and Rust changes, include coding-standard and lint-workflow findings when they are meaningful for maintainability or reviewer confidence. Avoid reporting pure formatting nits if `gofmt`, `go fmt`, `cargo fmt`, or an equivalent formatter can handle them.
+
+For Go changes, include `go-patterns` findings when they represent concrete maintainability, correctness, API ownership, context propagation, concurrency, or testability risk. Do not report pattern preferences as findings if the repository's existing convention clearly chooses another reasonable style.
+
+For Rust changes, include `rust-patterns` findings when they represent concrete maintainability, correctness, API ownership, ownership/borrowing, state modeling, async/concurrency, unsafe, or testability risk. Do not report pattern preferences as findings if the repository's existing convention clearly chooses another reasonable style.
+
+For lint-related review findings:
+
+- report new lint issues introduced by the feature
+- do not block on unrelated existing lint debt from the base branch
+- do not require broad refactors of already-complex functions/modules unless the feature worsens them or correctness is at risk
+- for test files, apply the relevant test-code rules from `go-lint-workflow` or `rust-lint-workflow`
