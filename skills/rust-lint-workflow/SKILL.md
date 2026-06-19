@@ -11,6 +11,8 @@ Lint changed behavior strictly. Handle existing debt pragmatically.
 
 Do not make a feature PR responsible for all existing Clippy or workspace lint debt. Do not change public API, visibility, ownership structure, or feature flags only to satisfy lint unless that change is part of the approved task.
 
+If lint or validation fails because Rust code does not compile, cargo check/test fails, feature resolution is broken, or borrow-checker/lifetime errors block validation, use `rust-build-resolver` first. Return to this lint workflow after the build failure is resolved.
+
 ## Scope
 
 Use this skill for Rust backend code:

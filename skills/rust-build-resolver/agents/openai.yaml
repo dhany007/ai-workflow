@@ -1,0 +1,6 @@
+interface:
+  display_name: "Rust Build Resolver"
+  short_description: "Fix Rust build and cargo failures"
+  default_prompt: "Use $rust-build-resolver to diagnose and fix Rust cargo check, build, clippy, test, dependency, or borrow-checker failures with minimal scoped changes."
+policy:
+  allow_implicit_invocation: true

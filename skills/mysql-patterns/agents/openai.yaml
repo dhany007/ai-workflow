@@ -1,0 +1,7 @@
+interface:
+  display_name: "MySQL Patterns"
+  short_description: "MySQL/MariaDB backend DB patterns"
+  default_prompt: "Use $mysql-patterns to design or review MySQL/MariaDB schema, query, index, transaction, and pool changes."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,6 +1,6 @@
 ---
 name: review-feature
-description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current git branch/worktree diff, compare it with a base branch or commit, read relevant files and tests, apply coding-standard plus go-patterns for Go code, rust-patterns for Rust code, and go-lint-workflow or rust-lint-workflow for changed Go/Rust files, produce a review in the same findings-first format as review-pr, and optionally resolve discovered findings in the local code when the user explicitly asks to fix/resolve them.
+description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current git branch/worktree diff, compare it with a base branch or commit, read relevant files and tests, apply coding-standard plus go-patterns for Go code, rust-patterns for Rust code, go-lint-workflow or rust-lint-workflow for changed Go/Rust files, database-migrations for schema/data migration or zero-downtime rollout changes, mysql-patterns for MySQL/MariaDB schema/query/transaction/pool changes, and postgres-patterns for PostgreSQL/Supabase schema/query/transaction/RLS/pool changes, produce a review in the same findings-first format as review-pr, and optionally resolve discovered findings in the local code when the user explicitly asks to fix/resolve them.
 ---
 
 # Review Feature
@@ -39,6 +39,9 @@ Determine review scope from the prompt:
    - For Go changes, use `go-lint-workflow` to distinguish new lint issues from existing baseline debt and to handle `*_test.go`, `gocyclo`, and `funlen` pragmatically.
    - For Rust changes, use `rust-patterns` to review ownership, borrowing, error handling, state modeling, trait/API boundaries, visibility, async/concurrency lifecycle, unsafe boundaries, testing patterns, and performance tradeoffs.
    - For Rust changes, use `rust-lint-workflow` to distinguish new Clippy/check issues from existing workspace debt and to handle unit/integration tests, complexity, public API, and `#[allow(...)]` pragmatically.
+   - For schema changes, data migrations, backfills, or zero-downtime rollout, use `database-migrations` to review migration immutability, lock risk, expand-contract compatibility, rollback/forward-fix strategy, and validation.
+   - For MySQL/MariaDB changes, use `mysql-patterns` to review migration safety, schema defaults, indexes, query plans, transactions, locking, replica consistency, connection pools, and least-privilege security.
+   - For PostgreSQL/Supabase changes, use `postgres-patterns` to review migration safety, schema defaults, indexes, query plans, transactions, locking, RLS policies, replica consistency, connection pools, and least-privilege security.
 6. Prioritize risks in this order: correctness bugs, regressions, data loss, security/privacy issues, concurrency/race issues, API contract breaks, migration/backward compatibility issues, missing tests for risky behavior, then maintainability and coding-standard drift.
 7. Run focused local validation when feasible and useful. If tests are not run, state that clearly.
 8. Do not push commits, create PRs, post comments, merge, or label anything unless the user explicitly asks.
@@ -119,6 +122,12 @@ Be specific and evidence-based. Do not report speculative issues unless there is
 Treat user context such as `context: group member list projection` as the intended behavior lens: check whether the implementation matches that intent, whether edge cases are handled, and whether tests prove the intended behavior.
 
 When a feature touches generated files, lockfiles, migrations, schemas, or cross-repository contracts, call that out explicitly because these often require separate validation.
+
+For migration changes, include `database-migrations` findings when they represent concrete lock, data loss, backward compatibility, rollout, rollback, backfill, dirty-state, or migration drift risk.
+
+For MySQL/MariaDB changes, include `mysql-patterns` findings when they represent concrete migration, locking, deadlock, query performance, data integrity, replica consistency, connection pool, or security risk. State engine/version assumptions when relevant.
+
+For PostgreSQL/Supabase changes, include `postgres-patterns` findings when they represent concrete migration, locking, deadlock, query performance, data integrity, RLS/security, replica consistency, connection pool, or extension/version risk. State version, extension, and Supabase assumptions when relevant.
 
 When reviewing local changes, pay extra attention to artifacts that would normally be caught during PR review: forgotten debug code, untracked files, missing generated updates, stale snapshots, accidental environment changes, and incomplete test updates.
 

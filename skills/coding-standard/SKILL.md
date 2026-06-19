@@ -67,8 +67,10 @@ When implementing Go or Rust features, apply this skill even if the user does no
 - When `tdd-workflow` is active, apply coding standards during the GREEN/refactor stage without skipping RED/GREEN validation.
 - For Go implementation and review, use `go-patterns` for idiomatic error handling, context propagation, interface/package design, dependency injection, concurrency, zero-value design, tests, performance tradeoffs, and anti-patterns.
 - For Go linting, use `go-lint-workflow`: prefer scoped or baseline-aware lint, do not assign unrelated legacy lint debt to the current feature, and handle `gocyclo`/`funlen` pragmatically.
+- For Go build, test, vet, module, or lint failures during implementation, use `go-build-resolver` to make minimal scoped fixes before broad cleanup.
 - For Rust implementation and review, use `rust-patterns` for ownership, borrowing, error handling, enums/state modeling, traits/generics, module visibility, async/concurrency, unsafe boundaries, testing patterns, and performance tradeoffs.
 - For Rust linting, use `rust-lint-workflow`: prefer package-scoped `cargo check/test/clippy`, avoid broad API/visibility refactors for existing Clippy debt, and handle test code with readability-aware judgment.
+- For Rust cargo check, test, clippy, dependency, lifetime, or borrow-checker failures during implementation, use `rust-build-resolver` to make minimal scoped fixes before broad cleanup.
 - Start from the smallest design that satisfies the requested behavior.
 - Follow the surrounding package/module structure before introducing a new abstraction.
 - Name new types, functions, traits, modules, and packages for their current responsibility, not future possibilities.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Database Migrations"
+  short_description: "Safe DB migration workflow"
+  default_prompt: "Use $database-migrations to plan or review PostgreSQL/MySQL schema changes, data migrations, rollbacks, and zero-downtime deployments."
+policy:
+  allow_implicit_invocation: true

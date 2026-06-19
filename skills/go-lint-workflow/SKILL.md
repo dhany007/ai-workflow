@@ -11,6 +11,8 @@ Lint changed behavior strictly. Handle existing debt pragmatically.
 
 Do not make a feature PR responsible for all existing lint debt in a package or function. Do not use lint as a reason to rewrite broad existing code unless the user explicitly asks for a cleanup/refactor task.
 
+If lint or validation fails because the Go code does not compile, imports are broken, tests fail, or module state blocks validation, use `go-build-resolver` first. Return to this lint workflow after the build failure is resolved.
+
 ## Scope
 
 Use this skill for Go backend code:

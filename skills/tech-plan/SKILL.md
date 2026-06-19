@@ -1,6 +1,6 @@
 ---
 name: tech-plan
-description: Create a backend-only technical implementation plan as a Markdown file before coding from prompts such as "tech-plan", "/tech-plan", "create tech plan", "plan this backend feature", "design backend implementation", or "analyze before implement". Use when Codex should read project memory folders such as "*-memory-system", inspect requirements and backend code, include API design when applicable, identify affected backend modules, risks, edge cases, test strategy, rollout notes, and open questions. The only allowed file write is the Markdown plan file; do not modify source, test, config, migration, generated, lock, or dependency files unless the user explicitly asks to implement after the plan.
+description: Create a backend-only technical implementation plan as a Markdown file before coding from prompts such as "tech-plan", "/tech-plan", "create tech plan", "plan this backend feature", "design backend implementation", or "analyze before implement". Use when Codex should read project memory folders such as "*-memory-system", inspect requirements and backend code, include API design when applicable, apply database-migrations when schema/data migration or zero-downtime rollout planning is involved, apply mysql-patterns when MySQL/MariaDB schema/query/transaction/pool changes are involved, apply postgres-patterns when PostgreSQL/Supabase schema/query/transaction/RLS/pool changes are involved, identify affected backend modules, risks, edge cases, test strategy, rollout notes, and open questions. The only allowed file write is the Markdown plan file; do not modify source, test, config, migration, generated, lock, or dependency files unless the user explicitly asks to implement after the plan.
 ---
 
 # Tech Plan
@@ -72,6 +72,9 @@ Create a Markdown plan file by default instead of only replying in chat. Prefer 
    - Propose a simple approach that satisfies the requirement.
    - Break work into ordered implementation tasks.
    - Include data model, state, validation, error handling, concurrency, performance, and backward compatibility considerations when relevant.
+   - If schema changes, data backfills, rollback planning, or zero-downtime rollout are involved, apply `database-migrations` and include migration phase, lock risk, rollback/forward-fix plan, and validation.
+   - If MySQL/MariaDB schema, query, index, transaction, replica, or pool behavior is touched, apply `mysql-patterns` and include engine/version assumptions plus migration/query validation.
+   - If PostgreSQL/Supabase schema, query, index, transaction, RLS, replica, or pool behavior is touched, apply `postgres-patterns` and include version/extension assumptions plus migration/query/RLS validation.
 5. Include API design when applicable:
    - Endpoint, method, route, and handler ownership.
    - Request shape, response shape, validation rules, and error model.
@@ -142,6 +145,10 @@ Create a Markdown file with this structure by default, then reply with the file 
 - For Go changes, automatically apply `go-patterns` for idiomatic backend design and implementation.
 - For Rust changes, automatically apply `rust-patterns` for idiomatic backend design and implementation.
 - For Go changes, use `go-lint-workflow` for scoped or baseline-aware lint; for Rust changes, use `rust-lint-workflow` for scoped cargo fmt/check/clippy/test validation.
+- If Go validation fails during implementation, use `go-build-resolver` for minimal scoped fixes. If Rust validation fails, use `rust-build-resolver`.
+- For schema changes, data migrations, backfills, or zero-downtime rollout, use `database-migrations` for migration safety, expand-contract planning, rollback/forward-fix strategy, and validation.
+- For MySQL/MariaDB changes, use `mysql-patterns` for schema, query, index, transaction, replication, pool, security, and migration validation.
+- For PostgreSQL/Supabase changes, use `postgres-patterns` for schema, query, index, transaction, RLS, replication, pool, security, and migration validation.
 - Keep implementation scoped to this backend plan unless the user approves changes outside scope.
 - Run focused format, lint, type-check, and test commands listed in `Test Plan` before finishing when feasible.
 ```
@@ -157,6 +164,9 @@ Prioritize simplicity and maintainability:
 - Follow existing project conventions unless there is a concrete reason to diverge.
 - Surface tradeoffs clearly when multiple approaches are viable.
 - Treat migrations, schemas, generated files, API contracts, and cross-repository changes as high-attention areas.
+- For schema/data migration designs, apply `database-migrations` for migration immutability, phased rollout, lock safety, backfill batching, compatibility, rollback/forward-fix planning, and validation.
+- For MySQL/MariaDB designs, apply `mysql-patterns` for engine/version assumptions, migration safety, indexing, query plans, locking/deadlocks, replica consistency, connection pools, and least-privilege access.
+- For PostgreSQL/Supabase designs, apply `postgres-patterns` for version/extension assumptions, migration safety, indexing, query plans, locks/deadlocks, RLS/security, replica consistency, connection pools, and least-privilege access.
 - For Go and Rust code, apply `coding-standard` expectations during planning: readability, KISS, DRY, YAGNI, idiomatic naming, formatting, error handling, visibility, linting, type-checking, and tests.
 - For Go backend designs, apply `go-patterns` for error handling, context propagation, interface boundaries, package ownership, dependency injection, concurrency lifecycle, zero-value design, testability, and performance tradeoffs.
 - For Rust backend designs, apply `rust-patterns` for ownership and borrowing, error handling, state modeling, traits/generics, module visibility, async/concurrency lifecycle, unsafe boundaries, testability, and performance tradeoffs.

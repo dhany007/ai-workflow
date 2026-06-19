@@ -63,6 +63,9 @@ If the feature needs code cleanup before PR, describe it as a note in the Markdo
 4. Identify tests added, updated, or run in the current session. Do not invent test results.
 5. Identify Go/Rust lint validation that was run in the current session, including `go-lint-workflow` or `rust-lint-workflow` results. Do not run formatters or linters that rewrite files during `pr-summary`.
 6. Note migrations, schema changes, generated files, lockfiles, API contracts, feature flags, configuration changes, and frontend screenshots/recordings if relevant.
+   - For schema changes, data migrations, backfills, or zero-downtime rollout, include `database-migrations` notes such as migration phase, lock risk, rollout order, rollback/forward-fix strategy, dry run, and validation status when known.
+   - For MySQL/MariaDB changes, include `mysql-patterns` validation notes such as engine/version assumptions, `EXPLAIN`, migration dry run, lock/deadlock risk, rollback criteria, or replica/pool considerations when known.
+   - For PostgreSQL/Supabase changes, include `postgres-patterns` validation notes such as version/extension assumptions, `EXPLAIN`, migration dry run, lock/deadlock risk, RLS policy validation, rollback criteria, or replica/pool considerations when known.
 7. Produce a clear PR title and body in a Markdown file. Do not create a PR, push commits, label, request reviewers, or post to GitHub unless the user explicitly asks.
 8. Before finishing, confirm that no source/test/config/migration/generated/dependency files were modified. If any were modified accidentally, stop and report the exact files instead of continuing.
 
@@ -100,6 +103,9 @@ Title: <imperative or concise feature title>
 
 ## Risk / Rollout
 - <migration, compatibility, release, feature flag, or operational notes>
+- <database-migrations phase/lock/backfill/rollback validation notes, if relevant>
+- <MySQL/MariaDB migration/query/index/transaction/replica/pool notes, if relevant>
+- <PostgreSQL/Supabase migration/query/index/transaction/RLS/replica/pool notes, if relevant>
 - <"Low risk" only when supported by the diff and tests>
 
 ## Screenshots / Recordings
