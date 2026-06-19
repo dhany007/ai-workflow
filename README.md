@@ -6,6 +6,7 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
 
 ```text
 .
+├── notes/
 ├── scripts/
 │   └── sync-from-codex.sh
 └── skills/
@@ -57,6 +58,10 @@ Available skills in the `skills/` directory:
 - `tech-plan`: creates backend-only technical implementation plans before coding, including affected modules, API design, error behavior, observability, migrations, database patterns, risks, edge cases, tests, rollout notes, and open questions.
 
 Each skill lives in its own directory and should include at least a `SKILL.md` file.
+
+## Notes
+
+Project notes are stored in the `notes/` directory. They are synced from `~/.codex/notes` by the same sync script used for skills.
 
 ## Suggested Workflow
 
@@ -125,16 +130,24 @@ Codex can also invoke skills implicitly when the user request matches the skill 
 
 ## Sync from Local Codex
 
-Use this script to copy skills from `~/.codex/skills` into this project's `skills/` directory:
+Use this script to copy skills from `~/.codex/skills` into this project's `skills/` directory and notes from `~/.codex/notes` into this project's `notes/` directory:
 
 ```bash
 scripts/sync-from-codex.sh
+```
+
+You can also use `make`:
+
+```bash
+make sync
 ```
 
 By default, the script:
 
 - reads from `~/.codex/skills`;
 - copies into `./skills`;
+- reads notes from `~/.codex/notes`;
+- copies notes into `./notes`;
 - copies user skills only;
 - skips the `.system` directory;
 - does not delete extra files in the target directory.
@@ -147,10 +160,22 @@ Preview changes without writing files:
 scripts/sync-from-codex.sh --dry-run
 ```
 
+Or:
+
+```bash
+make dry-run
+```
+
 ### Sync Specific Skills
 
 ```bash
 scripts/sync-from-codex.sh review-pr tech-plan
+```
+
+Or:
+
+```bash
+make sync-skills SKILLS="review-pr tech-plan"
 ```
 
 ### Include System Skills
@@ -161,9 +186,44 @@ To also copy `.system` skills:
 scripts/sync-from-codex.sh --include-system
 ```
 
+### Skip Notes
+
+If you only want to sync skills:
+
+```bash
+scripts/sync-from-codex.sh --skip-notes
+```
+
+### Sync Notes Only
+
+If you only want to sync notes:
+
+```bash
+scripts/sync-from-codex.sh --notes-only
+```
+
+Or:
+
+```bash
+make sync-notes
+```
+
+### Make Targets
+
+```text
+make help
+make sync
+make dry-run
+make sync-skills SKILLS="review-pr tech-plan"
+make sync-notes
+make sync-system
+make sync-delete
+make validate
+```
+
 ### Mirror Target with Source
 
-Use `--delete` when the target skill directory should match the source exactly and files that no longer exist in the source should be removed from the target:
+Use `--delete` when the target directories should match the source exactly and files that no longer exist in the source should be removed from the target:
 
 ```bash
 scripts/sync-from-codex.sh --delete
@@ -179,8 +239,12 @@ Usage: scripts/sync-from-codex.sh [options] [skill ...]
 Options:
   --source DIR       Source skills directory (default: ~/.codex/skills)
   --target DIR       Target skills directory (default: ./skills)
+  --notes-source DIR Source notes directory (default: ~/.codex/notes)
+  --notes-target DIR Target notes directory (default: ./notes)
+  --skip-notes       Do not sync notes
+  --notes-only       Sync notes without syncing skills
   --include-system   Also copy .system skills
-  --delete           Delete files in the target skill that no longer exist in source
+  --delete           Delete target files that no longer exist in source
   -n, --dry-run      Show what would be copied without changing files
   -h, --help         Show help
 ```
