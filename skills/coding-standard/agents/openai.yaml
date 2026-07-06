@@ -1,7 +1,7 @@
 interface:
   display_name: "Coding Standard"
-  short_description: "Go and Rust coding conventions"
-  default_prompt: "Use $coding-standard to review or refactor Go and Rust code for readability, maintainability, and consistency."
+  short_description: "Go, Rust, and Python conventions"
+  default_prompt: "Use $coding-standard to review or refactor Go, Rust, or Python code for readability, maintainability, and consistency."
 
 policy:
   allow_implicit_invocation: true

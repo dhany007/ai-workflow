@@ -1,0 +1,4 @@
+interface:
+  display_name: "Python Testing"
+  short_description: "Focused Python testing workflow"
+  default_prompt: "Use $python-testing to add or review focused Python tests for this change."

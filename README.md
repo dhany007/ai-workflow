@@ -13,6 +13,7 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── api-contract-review/
     ├── coding-standard/
     ├── database-migrations/
+    ├── effective-python/
     ├── error-handling/
     ├── go-build-resolver/
     ├── go-lint-workflow/
@@ -21,6 +22,8 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── observability-check/
     ├── postgres-patterns/
     ├── pr-summary/
+    ├── python-patterns/
+    ├── python-testing/
     ├── review-feature/
     ├── review-pr/
     ├── review-pr-followup/
@@ -37,8 +40,9 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
 Available skills in the `skills/` directory:
 
 - `api-contract-review`: reviews backend API compatibility for endpoints, request and response shapes, status codes, error models, validation, auth or tenant boundaries, pagination, versioning, generated contracts, and contract tests.
-- `coding-standard`: applies Go and Rust coding standards for implementation, refactoring, review quality, naming, formatting, linting setup, and contributor conventions. It also coordinates Go/Rust pattern and lint workflow skills when relevant.
+- `coding-standard`: applies Go, Rust, and Python coding standards for implementation, refactoring, review quality, naming, formatting, typing, linting setup, and contributor conventions. It coordinates language pattern, testing, lint, and build/check skills when relevant.
 - `database-migrations`: applies production-safe migration practices for PostgreSQL, MySQL/MariaDB, and common ORM migration tools, including rollout, rollback, backfills, indexes, constraints, and zero-downtime changes.
+- `effective-python`: applies deeper Python idiom and design judgment for API clarity, data modeling, iteration, resource lifecycle, exceptions, typing, protocols, object design, imports, async, performance tradeoffs, and maintainability.
 - `error-handling`: reviews and designs backend error behavior for validation, auth, database, external service, timeout, retry, worker, transaction, and observable failure paths.
 - `go-build-resolver`: diagnoses and fixes scoped Go build, test, vet, module, lint, compile, and `golangci-lint` failures without broad unrelated refactors.
 - `go-lint-workflow`: runs and interprets scoped Go linting with `golangci-lint`, `go vet`, and `go fmt`, while separating new issues from existing baseline debt.
@@ -47,6 +51,8 @@ Available skills in the `skills/` directory:
 - `observability-check`: reviews backend logging, metrics, tracing, error context, cardinality, dashboard or alert hooks, and PII or secret leakage risks for operationally important changes.
 - `postgres-patterns`: applies PostgreSQL and Supabase production patterns for schema design, migrations, indexes, query plans, keyset pagination, JSONB, full-text search, transactions, locks, RLS, replicas, and security.
 - `pr-summary`: generates a ready-to-paste pull request title and body from local branch or worktree changes, including JIRA/context/release notes when provided.
+- `python-patterns`: applies idiomatic Python backend and application patterns for typing, API boundaries, error handling, data modeling, package organization, dependency management, async/concurrency, testing patterns, tooling, performance tradeoffs, and anti-patterns.
+- `python-testing`: applies practical Python testing strategy for pytest or repository-standard tests, RED/GREEN when appropriate, fixtures, mocks/fakes, async tests, coverage, deterministic state, and scoped validation.
 - `review-feature`: reviews local feature work before a PR exists by inspecting branch or worktree diffs, applying coding standards, language patterns, lint workflows, error handling, API contracts, observability, and database safety where relevant.
 - `review-pr`: performs first-pass GitHub pull request reviews by inspecting metadata, diffs, comments, unresolved threads, CI status, relevant code context, and changed error behavior where relevant.
 - `review-pr-followup`: re-reviews a GitHub pull request after the author pushes updates, then verifies whether prior findings are resolved, partially resolved, unresolved, regressed, or need clarification.
@@ -76,7 +82,7 @@ tech-plan
   -> review-pr-followup
 ```
 
-The `implement this feature` step is handled by `tdd-workflow`, with `coding-standard`, language patterns, and scoped lint workflows applied as needed:
+For Go and Rust backend implementation, the `implement this feature` step is handled by `tdd-workflow`, with `coding-standard`, language patterns, and scoped lint workflows applied as needed:
 
 ```text
 tdd-workflow
@@ -87,11 +93,23 @@ tdd-workflow
   -> error-handling
 ```
 
+For Python implementation and review, use `coding-standard` with the Python-focused skills:
+
+```text
+coding-standard
+  -> python-patterns
+  -> effective-python
+  -> python-testing
+  -> error-handling
+```
+
 Use `solve-conflict-pr` whenever a PR branch cannot be merged cleanly into its target branch.
 
 Use focused skills directly when the task is centered on one layer:
 
-- `go-patterns` or `rust-patterns` for idiomatic design and implementation guidance.
+- `go-patterns`, `rust-patterns`, or `python-patterns` for idiomatic design and implementation guidance.
+- `effective-python` for deeper Python API, object design, typing, resource lifecycle, and maintainability refinement.
+- `python-testing` for Python test strategy, fixtures, mocks/fakes, async tests, RED/GREEN loops, and coverage guidance.
 - `go-lint-workflow` or `rust-lint-workflow` for scoped formatting, linting, and validation.
 - `go-build-resolver` or `rust-build-resolver` when validation fails and needs a minimal fix.
 - `api-contract-review` when client-observable API behavior changes.
@@ -116,6 +134,9 @@ Each skill can be invoked explicitly by name, for example:
 /mysql-patterns
 /observability-check
 /postgres-patterns
+/python-patterns
+/effective-python
+/python-testing
 /rust-patterns
 /rust-lint-workflow
 /rust-build-resolver

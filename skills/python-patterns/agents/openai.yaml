@@ -1,0 +1,4 @@
+interface:
+  display_name: "Python Patterns"
+  short_description: "Idiomatic Python engineering patterns"
+  default_prompt: "Use $python-patterns to implement or review this Python change with idiomatic typing, testing, packaging, and error handling."

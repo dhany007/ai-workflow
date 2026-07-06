@@ -1,11 +1,17 @@
 # Codex Skills Flow
 
-Personal cheat sheet untuk workflow backend Go/Rust.
+Personal cheat sheet untuk workflow backend Go/Rust/Python.
 
 ## Main Flow
 
 ```text
 tech-plan -> tdd-workflow -> review-feature -> pr-summary -> review-pr -> review-pr-followup
+```
+
+For Python-only implementation, replace the `tdd-workflow` step with:
+
+```text
+coding-standard -> python-patterns -> effective-python -> python-testing
 ```
 
 ## Daily Backend Flow
@@ -22,13 +28,19 @@ tech-plan -> tdd-workflow -> review-feature -> pr-summary -> review-pr -> review
 ## Always On During Implementation
 
 - `coding-standard`
-  - Go/Rust readability, KISS, DRY, YAGNI, naming, structure, formatting, linting, tests.
-- `go-patterns` / `rust-patterns`
-  - Idiomatic language-specific backend design and implementation.
+  - Go/Rust/Python readability, KISS, DRY, YAGNI, naming, structure, formatting, typing, linting, tests.
+- `go-patterns` / `rust-patterns` / `python-patterns`
+  - Idiomatic language-specific backend/application design and implementation.
+- `effective-python`
+  - Deeper Python API design, data modeling, iteration, resource lifecycle, typing, object design, imports, async, and maintainability refinement.
+- `python-testing`
+  - Python test strategy, pytest or repo-standard tests, fixtures, mocks/fakes, async tests, RED/GREEN loops, deterministic state, and coverage guidance.
 - `go-lint-workflow` / `rust-lint-workflow`
   - Scoped lint and formatting validation, baseline-aware.
 - `go-build-resolver` / `rust-build-resolver`
   - Use only when build/check/test/lint validation fails.
+
+Note: no dedicated Python lint/build resolver exists yet. For Python, inspect repo tooling first and use configured commands such as `python -m pytest`, Ruff, Black, mypy, or Pyright only when present or approved.
 
 ## Conditional Skills
 
@@ -44,6 +56,28 @@ tech-plan -> tdd-workflow -> review-feature -> pr-summary -> review-pr -> review
   - Use for MySQL/MariaDB schema, query, index, transaction, locking, replica, pool, and security concerns.
 - `postgres-patterns`
   - Use for PostgreSQL/Supabase schema, query, index, transaction, RLS, replica, pool, and security concerns.
+
+## Language Lanes
+
+### Go
+
+```text
+coding-standard -> go-patterns -> go-lint-workflow -> go-build-resolver if validation fails
+```
+
+### Rust
+
+```text
+coding-standard -> rust-patterns -> rust-lint-workflow -> rust-build-resolver if validation fails
+```
+
+### Python
+
+```text
+coding-standard -> python-patterns -> effective-python -> python-testing
+```
+
+For Python, `python-patterns` is the default implementation/review guide, `effective-python` is for deeper idiom/API refinement, and `python-testing` is for test strategy and RED/GREEN evidence.
 
 ## PR And Review Skills
 
@@ -77,11 +111,13 @@ Before planning, it should read project memory folders such as:
 
 ## TDD Rule
 
-For backend implementation:
+For Go/Rust backend implementation:
 
 ```text
 write failing test -> prove RED -> implement minimal code -> prove GREEN -> refactor -> validate
 ```
+
+Use `tdd-workflow` for Go/Rust backend TDD. For Python, use `python-testing` to apply the same RED/GREEN discipline with the repository's configured test runner.
 
 No automatic commits unless explicitly requested.
 
@@ -113,6 +149,18 @@ tech-plan context: add retry-safe webhook delivery
 
 ```text
 implement this feature from .codex/plans/webhook-delivery.md
+```
+
+```text
+implement this Python feature with coding-standard and python-patterns
+```
+
+```text
+use effective-python to refine this API
+```
+
+```text
+python-testing add regression coverage for this bug
 ```
 
 ```text

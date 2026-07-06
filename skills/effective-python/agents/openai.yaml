@@ -1,0 +1,4 @@
+interface:
+  display_name: "Effective Python"
+  short_description: "Practical advanced Python idioms"
+  default_prompt: "Use $effective-python to review this Python code for deeper idioms, API clarity, and maintainability."
