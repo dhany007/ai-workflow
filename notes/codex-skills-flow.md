@@ -1,6 +1,6 @@
 # Codex Skills Flow
 
-Personal cheat sheet untuk workflow backend Go/Rust/Python.
+Personal cheat sheet untuk workflow backend Go/Rust/Python dan frontend React.
 
 ## Main Flow
 
@@ -12,6 +12,12 @@ For Python-only implementation, replace the `tdd-workflow` step with:
 
 ```text
 coding-standard -> python-patterns -> effective-python -> python-testing
+```
+
+For React frontend implementation, use:
+
+```text
+react-patterns -> react-testing -> react-performance
 ```
 
 ## Daily Backend Flow
@@ -35,12 +41,20 @@ coding-standard -> python-patterns -> effective-python -> python-testing
   - Deeper Python API design, data modeling, iteration, resource lifecycle, typing, object design, imports, async, and maintainability refinement.
 - `python-testing`
   - Python test strategy, pytest or repo-standard tests, fixtures, mocks/fakes, async tests, RED/GREEN loops, deterministic state, and coverage guidance.
+- `react-patterns`
+  - React components, hooks, state, data flow, forms, accessibility, TypeScript, server/client boundaries, styling, and maintainability.
+- `react-testing`
+  - Behavior-focused React tests with repo-standard Testing Library/Vitest/Jest/MSW/Playwright/Cypress patterns.
+- `react-performance`
+  - React/Next.js waterfalls, bundles, hydration scope, render cascades, long lists, layout stability, and interaction performance.
 - `go-lint-workflow` / `rust-lint-workflow`
   - Scoped lint and formatting validation, baseline-aware.
 - `go-build-resolver` / `rust-build-resolver`
   - Use only when build/check/test/lint validation fails.
 
 Note: no dedicated Python lint/build resolver exists yet. For Python, inspect repo tooling first and use configured commands such as `python -m pytest`, Ruff, Black, mypy, or Pyright only when present or approved.
+
+Note: no dedicated React build resolver exists yet. For React, inspect repo scripts first and use configured commands such as `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, Vitest, Jest, Playwright, or Cypress only when present or approved.
 
 ## Conditional Skills
 
@@ -78,6 +92,14 @@ coding-standard -> python-patterns -> effective-python -> python-testing
 ```
 
 For Python, `python-patterns` is the default implementation/review guide, `effective-python` is for deeper idiom/API refinement, and `python-testing` is for test strategy and RED/GREEN evidence.
+
+### React
+
+```text
+react-patterns -> react-testing -> react-performance
+```
+
+For React, `react-patterns` is the default implementation/review guide, `react-testing` covers user-behavior tests and test layer decisions, and `react-performance` is for waterfalls, bundle, hydration, rendering, and interaction performance.
 
 ## PR And Review Skills
 
@@ -161,6 +183,18 @@ use effective-python to refine this API
 
 ```text
 python-testing add regression coverage for this bug
+```
+
+```text
+react-patterns build this dashboard view
+```
+
+```text
+react-testing add tests for this form
+```
+
+```text
+react-performance review this Next.js route
 ```
 
 ```text

@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Performance"
+  short_description: "React performance review workflow"
+  default_prompt: "Use $react-performance to review this React or Next.js code for waterfalls, bundle size, rendering, and interaction performance."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Testing"
+  short_description: "Behavior-focused React testing"
+  default_prompt: "Use $react-testing to add or review behavior-focused tests for this React component, hook, or page."

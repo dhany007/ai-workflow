@@ -24,6 +24,9 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── pr-summary/
     ├── python-patterns/
     ├── python-testing/
+    ├── react-patterns/
+    ├── react-performance/
+    ├── react-testing/
     ├── review-feature/
     ├── review-pr/
     ├── review-pr-followup/
@@ -53,6 +56,9 @@ Available skills in the `skills/` directory:
 - `pr-summary`: generates a ready-to-paste pull request title and body from local branch or worktree changes, including JIRA/context/release notes when provided.
 - `python-patterns`: applies idiomatic Python backend and application patterns for typing, API boundaries, error handling, data modeling, package organization, dependency management, async/concurrency, testing patterns, tooling, performance tradeoffs, and anti-patterns.
 - `python-testing`: applies practical Python testing strategy for pytest or repository-standard tests, RED/GREEN when appropriate, fixtures, mocks/fakes, async tests, coverage, deterministic state, and scoped validation.
+- `react-patterns`: applies practical React frontend engineering patterns for components, hooks, state, data flow, forms, accessibility, TypeScript, server/client boundaries, styling, and maintainability.
+- `react-performance`: reviews React and Next.js performance issues such as waterfalls, bundle size, hydration scope, server/client boundaries, render cascades, long lists, layout stability, and interaction responsiveness.
+- `react-testing`: applies behavior-focused React testing strategy for components, hooks, pages, forms, async UI, accessibility behavior, network interactions, and frontend user flows.
 - `review-feature`: reviews local feature work before a PR exists by inspecting branch or worktree diffs, applying coding standards, language patterns, lint workflows, error handling, API contracts, observability, and database safety where relevant.
 - `review-pr`: performs first-pass GitHub pull request reviews by inspecting metadata, diffs, comments, unresolved threads, CI status, relevant code context, and changed error behavior where relevant.
 - `review-pr-followup`: re-reviews a GitHub pull request after the author pushes updates, then verifies whether prior findings are resolved, partially resolved, unresolved, regressed, or need clarification.
@@ -103,6 +109,14 @@ coding-standard
   -> error-handling
 ```
 
+For React frontend implementation and review, use the React-focused skills:
+
+```text
+react-patterns
+  -> react-testing
+  -> react-performance
+```
+
 Use `solve-conflict-pr` whenever a PR branch cannot be merged cleanly into its target branch.
 
 Use focused skills directly when the task is centered on one layer:
@@ -110,6 +124,9 @@ Use focused skills directly when the task is centered on one layer:
 - `go-patterns`, `rust-patterns`, or `python-patterns` for idiomatic design and implementation guidance.
 - `effective-python` for deeper Python API, object design, typing, resource lifecycle, and maintainability refinement.
 - `python-testing` for Python test strategy, fixtures, mocks/fakes, async tests, RED/GREEN loops, and coverage guidance.
+- `react-patterns` for React components, hooks, state, forms, accessibility, TypeScript, and frontend composition.
+- `react-testing` for React Testing Library, Vitest/Jest, MSW, accessibility assertions, and E2E/component-test boundaries.
+- `react-performance` for React/Next.js waterfalls, bundles, hydration, rendering, and interaction performance.
 - `go-lint-workflow` or `rust-lint-workflow` for scoped formatting, linting, and validation.
 - `go-build-resolver` or `rust-build-resolver` when validation fails and needs a minimal fix.
 - `api-contract-review` when client-observable API behavior changes.
@@ -137,6 +154,9 @@ Each skill can be invoked explicitly by name, for example:
 /python-patterns
 /effective-python
 /python-testing
+/react-patterns
+/react-testing
+/react-performance
 /rust-patterns
 /rust-lint-workflow
 /rust-build-resolver
