@@ -10,6 +10,7 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
 ├── scripts/
 │   └── sync-from-codex.sh
 └── skills/
+    ├── accessibility/
     ├── api-contract-review/
     ├── coding-standard/
     ├── database-migrations/
@@ -35,13 +36,15 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── rust-patterns/
     ├── solve-conflict-pr/
     ├── tdd-workflow/
-    └── tech-plan/
+    ├── tech-plan/
+    └── typescript-patterns/
 ```
 
 ## Skills
 
 Available skills in the `skills/` directory:
 
+- `accessibility`: applies practical web accessibility guidance for semantic HTML, keyboard and focus behavior, forms, ARIA, color and contrast, dynamic UI, WCAG-aligned behavior, and testable UI outcomes.
 - `api-contract-review`: reviews backend API compatibility for endpoints, request and response shapes, status codes, error models, validation, auth or tenant boundaries, pagination, versioning, generated contracts, and contract tests.
 - `coding-standard`: applies Go, Rust, and Python coding standards for implementation, refactoring, review quality, naming, formatting, typing, linting setup, and contributor conventions. It coordinates language pattern, testing, lint, and build/check skills when relevant.
 - `database-migrations`: applies production-safe migration practices for PostgreSQL, MySQL/MariaDB, and common ORM migration tools, including rollout, rollback, backfills, indexes, constraints, and zero-downtime changes.
@@ -68,6 +71,7 @@ Available skills in the `skills/` directory:
 - `solve-conflict-pr`: resolves GitHub pull request merge conflicts by reproducing the conflict locally, preserving behavior from both sides, and running focused validation.
 - `tdd-workflow`: implements backend Go or Rust features, fixes, and refactors with a RED/GREEN/refactor test-driven workflow, using language-specific patterns, error handling guidance, lint workflows, and build resolvers during implementation and validation.
 - `tech-plan`: creates backend-only technical implementation plans before coding, including affected modules, API design, error behavior, observability, migrations, database patterns, risks, edge cases, tests, rollout notes, and open questions.
+- `typescript-patterns`: applies practical TypeScript type-design patterns for strict-mode-aware code, narrowing, unions, generics, API boundaries, React props, async behavior, generated clients, and maintainable TS/TSX.
 
 Each skill lives in its own directory and should include at least a `SKILL.md` file.
 
@@ -113,6 +117,8 @@ For React frontend implementation and review, use the React-focused skills:
 
 ```text
 react-patterns
+  -> typescript-patterns
+  -> accessibility
   -> react-testing
   -> react-performance
 ```
@@ -125,6 +131,8 @@ Use focused skills directly when the task is centered on one layer:
 - `effective-python` for deeper Python API, object design, typing, resource lifecycle, and maintainability refinement.
 - `python-testing` for Python test strategy, fixtures, mocks/fakes, async tests, RED/GREEN loops, and coverage guidance.
 - `react-patterns` for React components, hooks, state, forms, accessibility, TypeScript, and frontend composition.
+- `typescript-patterns` for TypeScript type design, narrowing, API boundaries, React props, generics, async modeling, and safe TS/TSX refactors.
+- `accessibility` for semantic HTML, keyboard access, focus management, labels, ARIA, contrast, dynamic UI behavior, and WCAG-aligned review.
 - `react-testing` for React Testing Library, Vitest/Jest, MSW, accessibility assertions, and E2E/component-test boundaries.
 - `react-performance` for React/Next.js waterfalls, bundles, hydration, rendering, and interaction performance.
 - `go-lint-workflow` or `rust-lint-workflow` for scoped formatting, linting, and validation.
@@ -142,6 +150,7 @@ Each skill can be invoked explicitly by name, for example:
 /tech-plan
 /tdd-workflow
 /coding-standard
+/accessibility
 /api-contract-review
 /database-migrations
 /error-handling
@@ -157,6 +166,7 @@ Each skill can be invoked explicitly by name, for example:
 /react-patterns
 /react-testing
 /react-performance
+/typescript-patterns
 /rust-patterns
 /rust-lint-workflow
 /rust-build-resolver

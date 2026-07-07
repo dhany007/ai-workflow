@@ -1,0 +1,6 @@
+interface:
+  display_name: "TypeScript Patterns"
+  short_description: "Practical TypeScript type design"
+  default_prompt: "Use $typescript-patterns to implement or review this TypeScript code for safe types, API clarity, and maintainability."
+policy:
+  allow_implicit_invocation: true

@@ -1,6 +1,6 @@
 # Codex Skills Flow
 
-Personal cheat sheet untuk workflow backend Go/Rust/Python dan frontend React.
+Personal cheat sheet untuk workflow backend Go/Rust/Python dan frontend React/TypeScript.
 
 ## Main Flow
 
@@ -17,7 +17,7 @@ coding-standard -> python-patterns -> effective-python -> python-testing
 For React frontend implementation, use:
 
 ```text
-react-patterns -> react-testing -> react-performance
+react-patterns -> typescript-patterns -> accessibility -> react-testing -> react-performance
 ```
 
 ## Daily Backend Flow
@@ -42,7 +42,11 @@ react-patterns -> react-testing -> react-performance
 - `python-testing`
   - Python test strategy, pytest or repo-standard tests, fixtures, mocks/fakes, async tests, RED/GREEN loops, deterministic state, and coverage guidance.
 - `react-patterns`
-  - React components, hooks, state, data flow, forms, accessibility, TypeScript, server/client boundaries, styling, and maintainability.
+  - React components, hooks, state, data flow, forms, server/client boundaries, styling, and maintainability.
+- `typescript-patterns`
+  - TypeScript type design, narrowing, discriminated unions, useful generics, API boundaries, React props, generated clients, and strict-mode-aware TS/TSX.
+- `accessibility`
+  - Semantic HTML, keyboard access, focus management, accessible names, forms, ARIA, contrast, dynamic UI behavior, and WCAG-aligned review.
 - `react-testing`
   - Behavior-focused React tests with repo-standard Testing Library/Vitest/Jest/MSW/Playwright/Cypress patterns.
 - `react-performance`
@@ -96,10 +100,10 @@ For Python, `python-patterns` is the default implementation/review guide, `effec
 ### React
 
 ```text
-react-patterns -> react-testing -> react-performance
+react-patterns -> typescript-patterns -> accessibility -> react-testing -> react-performance
 ```
 
-For React, `react-patterns` is the default implementation/review guide, `react-testing` covers user-behavior tests and test layer decisions, and `react-performance` is for waterfalls, bundle, hydration, rendering, and interaction performance.
+For React, `react-patterns` is the default implementation/review guide, `typescript-patterns` keeps TS/TSX contracts safe, `accessibility` checks semantic and keyboard behavior, `react-testing` covers user-behavior tests and test layer decisions, and `react-performance` is for waterfalls, bundle, hydration, rendering, and interaction performance.
 
 ## PR And Review Skills
 
@@ -187,6 +191,14 @@ python-testing add regression coverage for this bug
 
 ```text
 react-patterns build this dashboard view
+```
+
+```text
+typescript-patterns review these component props
+```
+
+```text
+accessibility review this modal and form
 ```
 
 ```text

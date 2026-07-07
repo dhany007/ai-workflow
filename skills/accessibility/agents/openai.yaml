@@ -1,0 +1,6 @@
+interface:
+  display_name: "Accessibility"
+  short_description: "Practical web accessibility review"
+  default_prompt: "Use $accessibility to implement or review this UI for semantic HTML, keyboard access, focus, ARIA, and WCAG-aligned behavior."
+policy:
+  allow_implicit_invocation: true
