@@ -1,0 +1,6 @@
+interface:
+  display_name: "Frontend Design System"
+  short_description: "Build consistent UI primitives and tokens"
+  default_prompt: "Use $frontend-design-system to design or review this UI for component consistency, tokens, variants, and responsive behavior."
+policy:
+  allow_implicit_invocation: true

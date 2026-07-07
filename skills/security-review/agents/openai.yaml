@@ -1,0 +1,6 @@
+interface:
+  display_name: "Security Review"
+  short_description: "Review app security risks and mitigations"
+  default_prompt: "Use $security-review to review this change for authentication, authorization, input handling, secrets, and web security risks."
+policy:
+  allow_implicit_invocation: true

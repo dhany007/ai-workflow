@@ -1,0 +1,6 @@
+interface:
+  display_name: "Frontend Build Resolver"
+  short_description: "Resolve frontend build and test failures"
+  default_prompt: "Use $frontend-build-resolver to diagnose and fix this frontend lint, typecheck, test, or build failure."
+policy:
+  allow_implicit_invocation: true

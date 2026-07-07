@@ -1,0 +1,6 @@
+interface:
+  display_name: "Python Lint Workflow"
+  short_description: "Run and interpret Python lint and type checks"
+  default_prompt: "Use $python-lint-workflow to run and resolve this Python lint, format, typecheck, or import failure."
+policy:
+  allow_implicit_invocation: true

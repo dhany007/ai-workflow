@@ -16,6 +16,8 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── database-migrations/
     ├── effective-python/
     ├── error-handling/
+    ├── frontend-build-resolver/
+    ├── frontend-design-system/
     ├── go-build-resolver/
     ├── go-lint-workflow/
     ├── go-patterns/
@@ -23,6 +25,7 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── observability-check/
     ├── postgres-patterns/
     ├── pr-summary/
+    ├── python-lint-workflow/
     ├── python-patterns/
     ├── python-testing/
     ├── react-patterns/
@@ -34,6 +37,7 @@ This repository stores Codex skills and supporting scripts for AI-assisted devel
     ├── rust-build-resolver/
     ├── rust-lint-workflow/
     ├── rust-patterns/
+    ├── security-review/
     ├── solve-conflict-pr/
     ├── tdd-workflow/
     ├── tech-plan/
@@ -50,6 +54,8 @@ Available skills in the `skills/` directory:
 - `database-migrations`: applies production-safe migration practices for PostgreSQL, MySQL/MariaDB, and common ORM migration tools, including rollout, rollback, backfills, indexes, constraints, and zero-downtime changes.
 - `effective-python`: applies deeper Python idiom and design judgment for API clarity, data modeling, iteration, resource lifecycle, exceptions, typing, protocols, object design, imports, async, performance tradeoffs, and maintainability.
 - `error-handling`: reviews and designs backend error behavior for validation, auth, database, external service, timeout, retry, worker, transaction, and observable failure paths.
+- `frontend-build-resolver`: diagnoses and fixes scoped frontend lint, typecheck, test, dev-server, build, bundler, SSR/hydration, CSS pipeline, and framework validation failures without broad dependency or config churn.
+- `frontend-design-system`: applies design-system engineering guidance for reusable UI primitives, tokens, variants, theming, responsive behavior, component documentation, and accessible shared components.
 - `go-build-resolver`: diagnoses and fixes scoped Go build, test, vet, module, lint, compile, and `golangci-lint` failures without broad unrelated refactors.
 - `go-lint-workflow`: runs and interprets scoped Go linting with `golangci-lint`, `go vet`, and `go fmt`, while separating new issues from existing baseline debt.
 - `go-patterns`: applies idiomatic Go backend patterns for error handling, context propagation, interfaces, packages, dependency injection, concurrency, testing, and performance tradeoffs.
@@ -57,6 +63,7 @@ Available skills in the `skills/` directory:
 - `observability-check`: reviews backend logging, metrics, tracing, error context, cardinality, dashboard or alert hooks, and PII or secret leakage risks for operationally important changes.
 - `postgres-patterns`: applies PostgreSQL and Supabase production patterns for schema design, migrations, indexes, query plans, keyset pagination, JSONB, full-text search, transactions, locks, RLS, replicas, and security.
 - `pr-summary`: generates a ready-to-paste pull request title and body from local branch or worktree changes, including JIRA/context/release notes when provided.
+- `python-lint-workflow`: runs and interprets Python linting, formatting, import, type-checking, packaging, pre-commit, tox/nox, and CI validation failures while separating new issues from baseline debt.
 - `python-patterns`: applies idiomatic Python backend and application patterns for typing, API boundaries, error handling, data modeling, package organization, dependency management, async/concurrency, testing patterns, tooling, performance tradeoffs, and anti-patterns.
 - `python-testing`: applies practical Python testing strategy for pytest or repository-standard tests, RED/GREEN when appropriate, fixtures, mocks/fakes, async tests, coverage, deterministic state, and scoped validation.
 - `react-patterns`: applies practical React frontend engineering patterns for components, hooks, state, data flow, forms, accessibility, TypeScript, server/client boundaries, styling, and maintainability.
@@ -68,6 +75,7 @@ Available skills in the `skills/` directory:
 - `rust-build-resolver`: diagnoses and fixes scoped Rust `cargo check`, build, test, clippy, dependency, feature, lifetime, borrow-checker, and `Cargo.toml` failures without broad unrelated refactors.
 - `rust-lint-workflow`: runs and interprets scoped Rust validation with `cargo fmt`, `cargo check`, `cargo clippy`, and tests, while separating new warnings from existing workspace debt.
 - `rust-patterns`: applies idiomatic Rust backend patterns for ownership, borrowing, errors, enums, traits, modules, async/concurrency, unsafe boundaries, testing, and performance tradeoffs.
+- `security-review`: reviews application security risks for authentication, authorization, tenant boundaries, input/output handling, XSS, CSRF, injection, secrets, sessions, cookies, files, webhooks, third-party integrations, logging, and sensitive data.
 - `solve-conflict-pr`: resolves GitHub pull request merge conflicts by reproducing the conflict locally, preserving behavior from both sides, and running focused validation.
 - `tdd-workflow`: implements backend Go or Rust features, fixes, and refactors with a RED/GREEN/refactor test-driven workflow, using language-specific patterns, error handling guidance, lint workflows, and build resolvers during implementation and validation.
 - `tech-plan`: creates backend-only technical implementation plans before coding, including affected modules, API design, error behavior, observability, migrations, database patterns, risks, edge cases, tests, rollout notes, and open questions.
@@ -110,6 +118,7 @@ coding-standard
   -> python-patterns
   -> effective-python
   -> python-testing
+  -> python-lint-workflow
   -> error-handling
 ```
 
@@ -117,10 +126,12 @@ For React frontend implementation and review, use the React-focused skills:
 
 ```text
 react-patterns
+  -> frontend-design-system
   -> typescript-patterns
   -> accessibility
   -> react-testing
   -> react-performance
+  -> frontend-build-resolver
 ```
 
 Use `solve-conflict-pr` whenever a PR branch cannot be merged cleanly into its target branch.
@@ -130,17 +141,21 @@ Use focused skills directly when the task is centered on one layer:
 - `go-patterns`, `rust-patterns`, or `python-patterns` for idiomatic design and implementation guidance.
 - `effective-python` for deeper Python API, object design, typing, resource lifecycle, and maintainability refinement.
 - `python-testing` for Python test strategy, fixtures, mocks/fakes, async tests, RED/GREEN loops, and coverage guidance.
+- `python-lint-workflow` for Ruff, Black, mypy, Pyright, import/package issues, pre-commit hooks, tox/nox, and Python CI validation.
 - `react-patterns` for React components, hooks, state, forms, accessibility, TypeScript, and frontend composition.
+- `frontend-design-system` for reusable UI primitives, tokens, variants, theming, visual states, responsive behavior, and Storybook-style documentation.
 - `typescript-patterns` for TypeScript type design, narrowing, API boundaries, React props, generics, async modeling, and safe TS/TSX refactors.
 - `accessibility` for semantic HTML, keyboard access, focus management, labels, ARIA, contrast, dynamic UI behavior, and WCAG-aligned review.
 - `react-testing` for React Testing Library, Vitest/Jest, MSW, accessibility assertions, and E2E/component-test boundaries.
 - `react-performance` for React/Next.js waterfalls, bundles, hydration, rendering, and interaction performance.
+- `frontend-build-resolver` when frontend lint, typecheck, test, build, bundler, SSR/hydration, CSS, or dev-server validation fails.
 - `go-lint-workflow` or `rust-lint-workflow` for scoped formatting, linting, and validation.
 - `go-build-resolver` or `rust-build-resolver` when validation fails and needs a minimal fix.
 - `api-contract-review` when client-observable API behavior changes.
 - `database-migrations`, `postgres-patterns`, or `mysql-patterns` for schema, query, transaction, and rollout work.
 - `error-handling` when failure behavior, retries, timeouts, transactions, or API errors change.
 - `observability-check` when a change affects production debugging, logging, metrics, tracing, alerts, workers, external calls, or critical flows.
+- `security-review` when authentication, authorization, tenant isolation, user input, rendering, secrets, sessions, webhooks, files, third-party integrations, logging, or sensitive data changes.
 
 ## Skill Triggers
 
@@ -154,6 +169,8 @@ Each skill can be invoked explicitly by name, for example:
 /api-contract-review
 /database-migrations
 /error-handling
+/frontend-build-resolver
+/frontend-design-system
 /go-patterns
 /go-lint-workflow
 /go-build-resolver
@@ -163,6 +180,7 @@ Each skill can be invoked explicitly by name, for example:
 /python-patterns
 /effective-python
 /python-testing
+/python-lint-workflow
 /react-patterns
 /react-testing
 /react-performance
@@ -170,6 +188,7 @@ Each skill can be invoked explicitly by name, for example:
 /rust-patterns
 /rust-lint-workflow
 /rust-build-resolver
+/security-review
 /review-feature
 /pr-summary
 /review-pr

@@ -1,6 +1,6 @@
 # Codex Skills Flow
 
-Personal cheat sheet untuk workflow backend Go/Rust/Python dan frontend React/TypeScript.
+Personal cheat sheet untuk workflow backend Go/Rust/Python, frontend React/TypeScript, dan security review.
 
 ## Main Flow
 
@@ -11,13 +11,13 @@ tech-plan -> tdd-workflow -> review-feature -> pr-summary -> review-pr -> review
 For Python-only implementation, replace the `tdd-workflow` step with:
 
 ```text
-coding-standard -> python-patterns -> effective-python -> python-testing
+coding-standard -> python-patterns -> effective-python -> python-testing -> python-lint-workflow
 ```
 
 For React frontend implementation, use:
 
 ```text
-react-patterns -> typescript-patterns -> accessibility -> react-testing -> react-performance
+react-patterns -> frontend-design-system -> typescript-patterns -> accessibility -> react-testing -> react-performance -> frontend-build-resolver
 ```
 
 ## Daily Backend Flow
@@ -41,8 +41,12 @@ react-patterns -> typescript-patterns -> accessibility -> react-testing -> react
   - Deeper Python API design, data modeling, iteration, resource lifecycle, typing, object design, imports, async, and maintainability refinement.
 - `python-testing`
   - Python test strategy, pytest or repo-standard tests, fixtures, mocks/fakes, async tests, RED/GREEN loops, deterministic state, and coverage guidance.
+- `python-lint-workflow`
+  - Python Ruff/Black/mypy/Pyright/import/package/pre-commit/tox/nox/CI validation, baseline-aware.
 - `react-patterns`
   - React components, hooks, state, data flow, forms, server/client boundaries, styling, and maintainability.
+- `frontend-design-system`
+  - Shared UI primitives, tokens, component variants, visual states, responsive behavior, theming, and component documentation.
 - `typescript-patterns`
   - TypeScript type design, narrowing, discriminated unions, useful generics, API boundaries, React props, generated clients, and strict-mode-aware TS/TSX.
 - `accessibility`
@@ -51,14 +55,14 @@ react-patterns -> typescript-patterns -> accessibility -> react-testing -> react
   - Behavior-focused React tests with repo-standard Testing Library/Vitest/Jest/MSW/Playwright/Cypress patterns.
 - `react-performance`
   - React/Next.js waterfalls, bundles, hydration scope, render cascades, long lists, layout stability, and interaction performance.
+- `frontend-build-resolver`
+  - Frontend lint/typecheck/test/build/dev-server/bundler/SSR/hydration/CSS validation failure resolution.
 - `go-lint-workflow` / `rust-lint-workflow`
   - Scoped lint and formatting validation, baseline-aware.
 - `go-build-resolver` / `rust-build-resolver`
   - Use only when build/check/test/lint validation fails.
 
-Note: no dedicated Python lint/build resolver exists yet. For Python, inspect repo tooling first and use configured commands such as `python -m pytest`, Ruff, Black, mypy, or Pyright only when present or approved.
-
-Note: no dedicated React build resolver exists yet. For React, inspect repo scripts first and use configured commands such as `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`, Vitest, Jest, Playwright, or Cypress only when present or approved.
+Note: Python and frontend validation resolvers should still inspect repo tooling first and use configured commands only when present or approved.
 
 ## Conditional Skills
 
@@ -74,6 +78,8 @@ Note: no dedicated React build resolver exists yet. For React, inspect repo scri
   - Use for MySQL/MariaDB schema, query, index, transaction, locking, replica, pool, and security concerns.
 - `postgres-patterns`
   - Use for PostgreSQL/Supabase schema, query, index, transaction, RLS, replica, pool, and security concerns.
+- `security-review`
+  - Use for auth, authorization, tenant isolation, input/output handling, XSS, CSRF, injection, secrets, sessions, cookies, files, webhooks, third-party integrations, logging, and sensitive data.
 
 ## Language Lanes
 
@@ -92,18 +98,18 @@ coding-standard -> rust-patterns -> rust-lint-workflow -> rust-build-resolver if
 ### Python
 
 ```text
-coding-standard -> python-patterns -> effective-python -> python-testing
+coding-standard -> python-patterns -> effective-python -> python-testing -> python-lint-workflow
 ```
 
-For Python, `python-patterns` is the default implementation/review guide, `effective-python` is for deeper idiom/API refinement, and `python-testing` is for test strategy and RED/GREEN evidence.
+For Python, `python-patterns` is the default implementation/review guide, `effective-python` is for deeper idiom/API refinement, `python-testing` is for test strategy and RED/GREEN evidence, and `python-lint-workflow` resolves Ruff/Black/mypy/Pyright/import/package validation.
 
 ### React
 
 ```text
-react-patterns -> typescript-patterns -> accessibility -> react-testing -> react-performance
+react-patterns -> frontend-design-system -> typescript-patterns -> accessibility -> react-testing -> react-performance -> frontend-build-resolver
 ```
 
-For React, `react-patterns` is the default implementation/review guide, `typescript-patterns` keeps TS/TSX contracts safe, `accessibility` checks semantic and keyboard behavior, `react-testing` covers user-behavior tests and test layer decisions, and `react-performance` is for waterfalls, bundle, hydration, rendering, and interaction performance.
+For React, `react-patterns` is the default implementation/review guide, `frontend-design-system` keeps shared UI primitives and tokens coherent, `typescript-patterns` keeps TS/TSX contracts safe, `accessibility` checks semantic and keyboard behavior, `react-testing` covers user-behavior tests and test layer decisions, `react-performance` is for waterfalls, bundle, hydration, rendering, and interaction performance, and `frontend-build-resolver` handles validation failures.
 
 ## PR And Review Skills
 
@@ -190,7 +196,15 @@ python-testing add regression coverage for this bug
 ```
 
 ```text
+python-lint-workflow fix this Ruff and mypy failure
+```
+
+```text
 react-patterns build this dashboard view
+```
+
+```text
+frontend-design-system create shared table and filter primitives
 ```
 
 ```text
@@ -207,6 +221,14 @@ react-testing add tests for this form
 
 ```text
 react-performance review this Next.js route
+```
+
+```text
+frontend-build-resolver fix this pnpm build failure
+```
+
+```text
+security-review check this auth and file upload change
 ```
 
 ```text
