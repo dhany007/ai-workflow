@@ -58,7 +58,7 @@ react-patterns -> frontend-design-system -> typescript-patterns -> accessibility
 - `frontend-build-resolver`
   - Frontend lint/typecheck/test/build/dev-server/bundler/SSR/hydration/CSS validation failure resolution.
 - `go-lint-workflow` / `rust-lint-workflow`
-  - Scoped lint and formatting validation, baseline-aware.
+  - Scoped lint and formatting validation, baseline-aware. For Go, cover `mnd`, `lll`, complexity, and test-file judgment without broad incidental refactors.
 - `go-build-resolver` / `rust-build-resolver`
   - Use only when build/check/test/lint validation fails.
 

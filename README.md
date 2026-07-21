@@ -57,7 +57,7 @@ Available skills in the `skills/` directory:
 - `frontend-build-resolver`: diagnoses and fixes scoped frontend lint, typecheck, test, dev-server, build, bundler, SSR/hydration, CSS pipeline, and framework validation failures without broad dependency or config churn.
 - `frontend-design-system`: applies design-system engineering guidance for reusable UI primitives, tokens, variants, theming, responsive behavior, component documentation, and accessible shared components.
 - `go-build-resolver`: diagnoses and fixes scoped Go build, test, vet, module, lint, compile, and `golangci-lint` failures without broad unrelated refactors.
-- `go-lint-workflow`: runs and interprets scoped Go linting with `golangci-lint`, `go vet`, and `go fmt`, while separating new issues from existing baseline debt.
+- `go-lint-workflow`: runs and interprets scoped Go linting with `golangci-lint`, `go vet`, and `go fmt`, including `mnd`, `lll`, complexity, and test-file judgment while separating new issues from existing baseline debt.
 - `go-patterns`: applies idiomatic Go backend patterns for error handling, context propagation, interfaces, packages, dependency injection, concurrency, testing, and performance tradeoffs.
 - `mysql-patterns`: applies MySQL and MariaDB production patterns for schema design, migrations, indexes, query performance, transactions, locks, replicas, connection pools, and operational validation.
 - `observability-check`: reviews backend logging, metrics, tracing, error context, cardinality, dashboard or alert hooks, and PII or secret leakage risks for operationally important changes.

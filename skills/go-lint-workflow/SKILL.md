@@ -1,6 +1,6 @@
 ---
 name: go-lint-workflow
-description: Run and interpret Go linting pragmatically for backend feature work from prompts such as "go-lint-workflow", "/go-lint-workflow", "golangci-lint this change", "lint Go changes", "handle gocyclo/funlen", or when Codex is implementing, reviewing, or refactoring Go code. Use when Codex should apply scoped golangci-lint/go vet/go fmt checks, distinguish new lint issues from existing baseline debt, handle touched complex functions without broad refactors, apply test-file-specific lint judgment, and report lint results without treating unrelated legacy issues as blockers.
+description: Run and interpret Go linting pragmatically for backend feature work from prompts such as "go-lint-workflow", "/go-lint-workflow", "golangci-lint this change", "lint Go changes", "handle gocyclo/funlen/mnd/lll", "fix magic number", "fix long line", or when Codex is implementing, reviewing, or refactoring Go code. Use when Codex should apply scoped golangci-lint/go vet/go fmt checks, distinguish new lint issues from existing baseline debt, handle touched complex functions, magic numbers, and line-length problems without broad refactors, apply test-file-specific lint judgment, and report lint results without treating unrelated legacy issues as blockers.
 ---
 
 # Go Lint Workflow
@@ -76,9 +76,11 @@ linters:
     - wastedassign
     - prealloc
     - nolintlint
+    - mnd
+    - lll
 ```
 
-Treat style and complexity linters as guardrails, not as permission for broad incidental refactors.
+Treat style, readability, and complexity linters as guardrails, not as permission for broad incidental refactors.
 
 ## Baseline-Aware Decision Rules
 
@@ -119,6 +121,63 @@ func parseLegacyPayload(...) error {
 }
 ```
 
+## Magic Numbers and Line Length
+
+For `mnd`, `lll`, or similar readability findings, prefer readable code over mechanical appeasement.
+
+### `mnd`
+
+Treat magic-number findings as a request to explain intent:
+
+- Replace repeated or domain-significant numbers with named constants.
+- Prefer units in names, such as `requestTimeoutSeconds`, `maxRetryAttempts`, or `defaultPageSize`.
+- Keep obvious sentinel or arithmetic values inline when naming them would add noise.
+- Prefer standard library constants and domain constants over duplicated literals.
+- Avoid extracting a constant only to satisfy lint when the name repeats the value without explaining meaning.
+
+Allow more flexibility for:
+
+- test table values that are clearer inline
+- common HTTP status codes when `http.Status...` is not available or would obscure the case
+- small arithmetic values such as `0`, `1`, `2`, and simple slice/index operations
+- examples, fixtures, and generated-code boundaries
+
+Use scoped suppression only with a concrete reason:
+
+```go
+//nolint:mnd // Protocol version is fixed by the external payment provider.
+const paymentProtocolVersion = 3
+```
+
+### `lll`
+
+Treat long lines as a real readability issue. Code that requires horizontal scrolling should usually be refactored.
+
+Prefer these fixes:
+
+- Break function calls across arguments with one meaningful argument per line.
+- Split long table-driven test cases into named fields or helper builders.
+- Move repeated setup into small helpers when it reduces visual width.
+- Use raw strings or adjacent string fragments only when the resulting text remains easier to read.
+- Split long SQL, GraphQL, JSON, or expected payloads into fixtures or named constants when that improves reviewability.
+- Break chained builders at semantic boundaries.
+
+Avoid these fixes:
+
+- hiding long lines by using vague helper names
+- making logs or error messages harder to search
+- splitting URLs, regexes, or generated values in a way that changes meaning
+- adding `//nolint:lll` because wrapping feels mildly inconvenient
+
+Use scoped suppression for unavoidable machine-readable literals, generated-like expectations, or protocol strings:
+
+```go
+//nolint:lll // Golden test vector must stay byte-for-byte identical to the provider fixture.
+const signedWebhookFixture = "..."
+```
+
+If a repository configures `lll`, prefer its threshold. When adding or tuning config, start from the golangci-lint default line length unless the repo has an existing width convention.
+
 ## Test Code Rules
 
 Lint `*_test.go` files too, but judge them differently from production code.
@@ -136,8 +195,10 @@ Allow more flexibility when it improves readability:
 
 - table-driven test size
 - repeated literals that make cases clear
+- inline numeric case values when extraction would hide the scenario being tested
 - duplicated setup across a small number of tests
 - longer test functions for comprehensive scenario setup
+- longer fixture or golden-output lines when preserving exact data is more important than wrapping
 - helper functions that use `t.Helper()`
 
 Do not disable lint globally for tests. Use scoped `//nolint` with a reason when necessary:
