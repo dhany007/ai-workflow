@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Legacy Extraction"
+  short_description: "Extract evidence from legacy Java systems."
+  default_prompt: "Use $java-legacy-extraction to inventory evidence from this legacy Java application."

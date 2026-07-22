@@ -1,6 +1,6 @@
 ---
 name: review-feature
-description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current git branch/worktree diff, compare it with a base branch or commit, read relevant files and tests, apply coding-standard plus go-patterns for Go code, rust-patterns for Rust code, go-lint-workflow or rust-lint-workflow for changed Go/Rust files, error-handling for changed validation/API/database/external-service/timeout/retry/cancellation failure behavior, api-contract-review for client-observable API behavior changes, observability-check for operationally important endpoints/workers/external calls/migrations/critical flows/retries/concurrency, database-migrations for schema/data migration or zero-downtime rollout changes, mysql-patterns for MySQL/MariaDB schema/query/transaction/pool changes, and postgres-patterns for PostgreSQL/Supabase schema/query/transaction/RLS/pool changes, produce a review in the same findings-first format as review-pr, and optionally resolve discovered findings in the local code when the user explicitly asks to fix/resolve them.
+description: Review local feature work before a pull request exists from prompts such as "review-feature", "/review-feature", "review my feature", "review local changes", or "review and resolve findings". Use when Codex should inspect the current branch/worktree against a base, automatically coordinate code-reviewer, stack-reviewer, and architect agents according to changed stacks and risk when subagents are available, apply relevant language, error, API, database, observability, and security skills, produce the same findings-first format as review-pr, and optionally resolve confirmed findings in local code only when explicitly requested.
 ---
 
 # Review Feature
@@ -39,15 +39,34 @@ Determine review scope from the prompt:
    - For Go changes, use `go-lint-workflow` to distinguish new lint issues from existing baseline debt and to handle `*_test.go`, `gocyclo`, and `funlen` pragmatically.
    - For Rust changes, use `rust-patterns` to review ownership, borrowing, error handling, state modeling, trait/API boundaries, visibility, async/concurrency lifecycle, unsafe boundaries, testing patterns, and performance tradeoffs.
    - For Rust changes, use `rust-lint-workflow` to distinguish new Clippy/check issues from existing workspace debt and to handle unit/integration tests, complexity, public API, and `#[allow(...)]` pragmatically.
+   - For Java changes, use `java-patterns`; use `java-build-resolver` only for observed compile, test, Maven/Gradle, profile, dependency, WAR, or classpath failures.
+   - For Python changes, use `python-patterns`, `effective-python`, `python-testing`, and `python-lint-workflow` according to the changed behavior and configured tooling.
+   - For React/TypeScript changes, use `react-patterns`, `typescript-patterns`, `accessibility`, `react-testing`, and `react-performance`; use `frontend-build-resolver` only for observed validation failures.
    - For validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior, use `error-handling` to review classification, propagation, boundary mapping, retry safety, logging privacy, and error-path test coverage.
    - For client-observable API request, response, error, auth, pagination, idempotency, or generated contract changes, use `api-contract-review` to review backward compatibility and contract-test coverage.
    - For operationally important endpoints, workers, jobs, external calls, migrations/backfills, critical flows, retries, or concurrency, use `observability-check` to review production debuggability, logs, metrics, tracing/telemetry, and PII/secret safety.
    - For schema changes, data migrations, backfills, or zero-downtime rollout, use `database-migrations` to review migration immutability, lock risk, expand-contract compatibility, rollback/forward-fix strategy, and validation.
    - For MySQL/MariaDB changes, use `mysql-patterns` to review migration safety, schema defaults, indexes, query plans, transactions, locking, replica consistency, connection pools, and least-privilege security.
    - For PostgreSQL/Supabase changes, use `postgres-patterns` to review migration safety, schema defaults, indexes, query plans, transactions, locking, RLS policies, replica consistency, connection pools, and least-privilege security.
+   - For authentication, authorization, tenant, untrusted input, rendering, secrets, sessions, files, webhooks, integrations, logging, or sensitive-data changes, use `security-review`.
 6. Prioritize risks in this order: correctness bugs, regressions, data loss, security/privacy issues, concurrency/race issues, API contract breaks, migration/backward compatibility issues, missing tests for risky behavior, then maintainability and coding-standard drift.
 7. Run focused local validation when feasible and useful. If tests are not run, state that clearly.
 8. Do not push commits, create PRs, post comments, merge, or label anything unless the user explicitly asks.
+
+## Agent Delegation
+
+Treat `review-feature` as sufficient authorization to orchestrate read-only review agents. Inspect scope and changed files first, then follow the same delegation policy as `review-pr`:
+
+- Skip agents only for a clearly trivial, low-risk change.
+- Spawn `code-reviewer` for non-trivial language-neutral review.
+- Spawn one `stack-reviewer` per materially changed Go, Rust, Java, Python, or React/TypeScript stack and explicitly assign the matching skill lane.
+- Spawn `architect` only for cross-module boundaries, public contracts, schema or migration strategy, transaction/consistency changes, deployment topology, major integrations, legacy rewrite parity, or durable design decisions.
+
+Run independent agents in parallel and keep them read-only. Give them the base, head/worktree scope, user context, raw changed-file evidence, and relevant skill names without leaking suspected findings. Wait for all requested agents, then verify locations and failure modes, deduplicate findings, reconcile severity, and own final validation.
+
+In resolve mode, agents identify risks but do not edit. The main agent applies only confirmed fixes, validates them, and re-reviews the final diff. Re-run a specialist only when the fix materially changes its assigned behavior or stack surface.
+
+If custom agents or subagent tools are unavailable, perform the same scoped review directly and continue.
 
 ## Resolve Mode
 

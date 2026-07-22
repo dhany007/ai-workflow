@@ -1,11 +1,25 @@
 # Codex Skills Flow
 
-Personal cheat sheet untuk workflow backend Go/Rust/Python, frontend React/TypeScript, dan security review.
+Personal cheat sheet untuk workflow backend Go/Rust/Python, legacy Java discovery dan migration mapping, frontend React/TypeScript, security review, serta custom-agent orchestration.
 
 ## Main Flow
 
 ```text
 tech-plan -> tdd-workflow -> review-feature -> pr-summary -> review-pr -> review-pr-followup
+```
+
+Custom agents are selected by the skills, so short prompts remain sufficient:
+
+```text
+review-pr / review-feature
+  -> code-reviewer for non-trivial review
+  -> stack-reviewer per changed stack
+  -> architect only for material architecture changes
+  -> main Codex verifies and consolidates findings
+
+tech-plan
+  -> architect only when architecture analysis materially improves the plan
+  -> main Codex writes the plan
 ```
 
 For Python-only implementation, replace the `tdd-workflow` step with:
@@ -18,6 +32,18 @@ For React frontend implementation, use:
 
 ```text
 react-patterns -> frontend-design-system -> typescript-patterns -> accessibility -> react-testing -> react-performance -> frontend-build-resolver
+```
+
+For a legacy Java rewrite, use:
+
+```text
+java-legacy-extraction -> java-legacy-discovery -> java-migration-mapping -> target implementation skills
+```
+
+For direct Java implementation or repair, use:
+
+```text
+java-patterns -> java-build-resolver if validation fails
 ```
 
 ## Daily Backend Flow
@@ -61,11 +87,21 @@ react-patterns -> frontend-design-system -> typescript-patterns -> accessibility
   - Scoped lint and formatting validation, baseline-aware. For Go, cover `mnd`, `lll`, complexity, and test-file judgment without broad incidental refactors.
 - `go-build-resolver` / `rust-build-resolver`
   - Use only when build/check/test/lint validation fails.
+- `java-patterns`
+  - Version-aware Java implementation and review across Java 8+, Spring, Maven/Gradle, MyBatis/JPA, transactions, errors, resources, concurrency, and tests.
+- `java-build-resolver`
+  - Use when Java compile, test, Maven/Gradle, dependency, profile, resource-filtering, WAR, plugin, or classpath validation fails.
 
-Note: Python and frontend validation resolvers should still inspect repo tooling first and use configured commands only when present or approved.
+Note: Java, Python, and frontend validation resolvers should inspect repo tooling first and use configured commands only when present or approved.
 
 ## Conditional Skills
 
+- `java-legacy-extraction`
+  - Use to build a source-linked inventory of modules, routes, jobs, service paths, MyBatis queries, JSP actions, configuration variants, and cross-cutting concerns.
+- `java-legacy-discovery`
+  - Use to reconstruct business rules and end-to-end behavior after extraction, with confidence and preserve/confirm/defect/obsolete classification.
+- `java-migration-mapping`
+  - Use after discovery to map APIs, data, transactions, jobs, sessions, and integrations to a target architecture with parity and reconciliation criteria.
 - `error-handling`
   - Use for validation errors, API errors, DB errors, external service failures, timeout, cancellation, retry, workers, jobs, and observable failure behavior.
 - `api-contract-review`
@@ -95,6 +131,22 @@ coding-standard -> go-patterns -> go-lint-workflow -> go-build-resolver if valid
 coding-standard -> rust-patterns -> rust-lint-workflow -> rust-build-resolver if validation fails
 ```
 
+### Java
+
+For direct Java implementation or maintenance:
+
+```text
+java-patterns -> java-build-resolver if validation fails
+```
+
+For legacy extraction and rewrite work:
+
+```text
+java-legacy-extraction -> java-legacy-discovery -> java-migration-mapping
+```
+
+For 6HC, treat the Java/MySQL system as source evidence. Continue target implementation through `go-patterns`, `tdd-workflow`, `api-contract-review`, `database-migrations`, `mysql-patterns`, and `postgres-patterns` as applicable.
+
 ### Python
 
 ```text
@@ -115,12 +167,14 @@ For React, `react-patterns` is the default implementation/review guide, `fronten
 
 - `review-feature`
   - Review local feature before PR exists.
+  - Automatically orchestrates read-only review agents according to scope and changed stacks.
   - Can resolve findings only when explicitly asked.
 - `pr-summary`
   - Generate PR title/body Markdown file only.
   - Does not modify implementation files.
 - `review-pr`
   - Review GitHub PR and produce findings.
+  - Automatically uses `code-reviewer`, per-stack `stack-reviewer`, and conditional `architect` when available.
   - Does not post comments unless explicitly asked.
 - `review-pr-followup`
   - Re-review after PR findings were commented and the author pushed updates.
@@ -132,6 +186,8 @@ For React, `react-patterns` is the default implementation/review guide, `fronten
 ## Backend Planning Rule
 
 `tech-plan` is planning-only.
+
+For material boundary, contract, migration, consistency, integration, deployment, or legacy-rewrite decisions, it automatically consults the read-only `architect` agent when available. The main thread still owns and writes the final plan.
 
 It may create or update one Markdown plan file, but must not edit source, test, config, migration, generated, lock, or dependency files unless implementation is explicitly requested after the plan.
 
@@ -228,6 +284,26 @@ frontend-build-resolver fix this pnpm build failure
 ```
 
 ```text
+java-legacy-extraction inventory the 6hc-java modules with file:line evidence
+```
+
+```text
+java-legacy-discovery reconstruct the login and authorization flow
+```
+
+```text
+java-migration-mapping map this Spring MVC and MySQL behavior to Go and PostgreSQL
+```
+
+```text
+java-patterns review this Java 8 Spring service change
+```
+
+```text
+java-build-resolver diagnose why this Maven WAR build skips tests
+```
+
+```text
 security-review check this auth and file upload change
 ```
 
@@ -258,6 +334,7 @@ solve-conflict-pr https://github.com/org/repo/pull/123
 ## Context Engineering Notes
 
 - Keep prompts short and trigger-oriented.
+- Let `review-pr`, `review-feature`, and `tech-plan` select agents; name agents manually only when overriding the default orchestration.
 - Do not paste the whole repository context unless needed.
 - Prefer specific skill names over long instructions.
 - Let skills inspect repository files only when relevant.

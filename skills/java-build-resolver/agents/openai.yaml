@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Build Resolver"
+  short_description: "Resolve Maven and Java validation failures."
+  default_prompt: "Use $java-build-resolver to diagnose and fix this Java build or test failure."

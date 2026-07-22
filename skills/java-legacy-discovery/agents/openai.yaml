@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Legacy Discovery"
+  short_description: "Discover behavior in legacy Java applications."
+  default_prompt: "Use $java-legacy-discovery to reconstruct the behavior of this legacy Java application."

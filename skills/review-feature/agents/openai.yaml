@@ -1,7 +1,7 @@
 interface:
   display_name: "Review Feature"
   short_description: "Review local feature changes before PR"
-  default_prompt: "Use $review-feature to review my local feature changes before opening a PR."
+  default_prompt: "Use $review-feature to review my local changes with the relevant read-only custom agents before opening a PR."
 
 policy:
   allow_implicit_invocation: true

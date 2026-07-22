@@ -1,6 +1,6 @@
 ---
 name: tech-plan
-description: Create a backend-only technical implementation plan as a Markdown file before coding from prompts such as "tech-plan", "/tech-plan", "create tech plan", "plan this backend feature", "design backend implementation", or "analyze before implement". Use when Codex should read project memory folders such as "*-memory-system", inspect requirements and backend code, include API design when applicable, apply error-handling when validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior are involved, apply api-contract-review when client-observable API behavior changes, apply observability-check when operationally important endpoints, workers, external calls, migrations/backfills, critical flows, retries, or concurrency are involved, apply database-migrations when schema/data migration or zero-downtime rollout planning is involved, apply mysql-patterns when MySQL/MariaDB schema/query/transaction/pool changes are involved, apply postgres-patterns when PostgreSQL/Supabase schema/query/transaction/RLS/pool changes are involved, identify affected backend modules, risks, edge cases, test strategy, rollout notes, and open questions. The only allowed file write is the Markdown plan file; do not modify source, test, config, migration, generated, lock, or dependency files unless the user explicitly asks to implement after the plan.
+description: Create a backend-only technical implementation plan as a Markdown file before coding from prompts such as "tech-plan", "/tech-plan", "create tech plan", "plan this backend feature", "design backend implementation", or "analyze before implement". Use when Codex should read project memory, inspect requirements and backend code, automatically consult the read-only architect agent for material cross-module, contract, data, migration, consistency, integration, deployment, or legacy-rewrite decisions when subagents are available, apply relevant error/API/observability/database/language skills, identify affected modules, risks, edge cases, tests, rollout, and open questions. The only allowed file write is the Markdown plan file; do not modify source, test, config, migration, generated, lock, or dependency files unless implementation is explicitly requested after the plan.
 ---
 
 # Tech Plan
@@ -52,6 +52,25 @@ If a change to code is needed, describe it in the Markdown plan under `Implement
 This skill is backend-only by default. Focus on services, handlers, APIs, domain logic, persistence, migrations, generated backend contracts, workers, jobs, queues, configuration, auth, observability, and backend tests. Exclude frontend/UI planning unless the user explicitly asks to include it.
 
 Create a Markdown plan file by default instead of only replying in chat. Prefer a repository-local planning path if one already exists, such as `docs/`, `plans/`, `.agents/`, `.codex/`, or a memory-system planning folder. If no suitable convention exists, ask for the target path or propose a concise filename such as `tech-plan-<feature-slug>.md`. Do not create or edit implementation source files as part of this skill.
+
+## Architect Delegation
+
+Treat `tech-plan` as sufficient authorization to consult the read-only `architect` agent when architecture analysis materially improves the plan. The user does not need to request the agent separately.
+
+Invoke `architect` after gathering the requirement and enough repository evidence when the change involves one or more of:
+
+- cross-module, service, package, or ownership-boundary changes
+- new or changed public API, schema, generated contract, integration, queue, or job boundary
+- data migration, backfill, transaction, concurrency, consistency, or idempotency decisions
+- deployment topology, runtime, availability, recovery, or significant performance constraints
+- legacy extraction, rewrite parity, or source-to-target migration such as Java/MySQL to Go/PostgreSQL
+- a durable choice with meaningful alternatives that may warrant an ADR
+
+Skip architect delegation for a localized change that follows an established pattern and has no material boundary or operational decision.
+
+Give the architect the requirement, non-goals, repository paths, constraints, existing decisions, and relevant skill names. For legacy Java rewrites, explicitly assign `java-legacy-extraction`, `java-legacy-discovery`, and `java-migration-mapping` as applicable. Do not provide a preferred solution as if already decided.
+
+Wait for the architect, verify its evidence against the repository, and critically evaluate alternatives. The main agent owns the final design, writes the single allowed Markdown plan file, and records any rejected recommendation or unresolved assumption. If custom agents or subagent tools are unavailable, perform the architecture analysis directly and continue.
 
 ## Workflow
 

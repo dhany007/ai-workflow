@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Migration Mapping"
+  short_description: "Map legacy Java behavior to target systems."
+  default_prompt: "Use $java-migration-mapping to map this legacy Java behavior to the target architecture."

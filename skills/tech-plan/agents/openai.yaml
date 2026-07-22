@@ -1,7 +1,7 @@
 interface:
   display_name: "Tech Plan"
   short_description: "Create backend Markdown plans"
-  default_prompt: "Use $tech-plan to read project memory and create a backend technical plan Markdown file before coding."
+  default_prompt: "Use $tech-plan to inspect the repository, consult the architect agent when warranted, and create a backend plan before coding."
 
 policy:
   allow_implicit_invocation: true

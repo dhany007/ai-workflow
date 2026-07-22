@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Patterns"
+  short_description: "Apply maintainable Java and Spring patterns."
+  default_prompt: "Use $java-patterns to implement or review this Java change idiomatically."
