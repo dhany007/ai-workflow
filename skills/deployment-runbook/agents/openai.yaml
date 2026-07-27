@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deployment Runbook"
+  short_description: "Create deploy and rollback runbooks."
+  default_prompt: "Use $deployment-runbook to create or review deployment and rollback instructions."

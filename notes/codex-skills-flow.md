@@ -1,6 +1,6 @@
 # Codex Skills Flow
 
-Personal cheat sheet untuk workflow backend Go/Rust/Python, legacy Java discovery dan migration mapping, frontend React/TypeScript, security review, serta custom-agent orchestration.
+Personal cheat sheet untuk workflow backend Go/Rust/Python, legacy Java discovery dan migration mapping, frontend React/TypeScript, operational readiness, security review, serta custom-agent orchestration.
 
 ## Main Flow
 
@@ -44,6 +44,12 @@ For direct Java implementation or repair, use:
 
 ```text
 java-patterns -> java-build-resolver if validation fails
+```
+
+For operational handoff and release readiness, use:
+
+```text
+env-config-management -> docker-compose-ops -> data-reconciliation when data moved -> deployment-runbook -> production-readiness-audit
 ```
 
 ## Daily Backend Flow
@@ -102,6 +108,16 @@ Note: Java, Python, and frontend validation resolvers should inspect repo toolin
   - Use to reconstruct business rules and end-to-end behavior after extraction, with confidence and preserve/confirm/defect/obsolete classification.
 - `java-migration-mapping`
   - Use after discovery to map APIs, data, transactions, jobs, sessions, and integrations to a target architecture with parity and reconciliation criteria.
+- `data-reconciliation`
+  - Use to prove migrated, imported, backfilled, rewritten, or synchronized data matches its source through counts, identity mapping, financial or quantity checks, deterministic samples, and explicit mismatch classification.
+- `env-config-management`
+  - Use for environment variables, YAML/TOML/JSON configuration, `.env` files, defaults, secrets, startup validation, and local/staging/production drift.
+- `docker-compose-ops`
+  - Use for Compose entrypoint discovery, scoped startup, service health, logs, rebuilds, dependencies, ports, volumes, databases, caches, and local stack troubleshooting.
+- `deployment-runbook`
+  - Use to create or review repeatable prerequisites, deployment, restart, validation, rollback, troubleshooting, and operational handoff instructions.
+- `production-readiness-audit`
+  - Use for an evidence-backed readiness decision across build validation, runtime health, security, data safety, observability, performance, operations, rollback, and documentation.
 - `error-handling`
   - Use for validation errors, API errors, DB errors, external service failures, timeout, cancellation, retry, workers, jobs, and observable failure behavior.
 - `api-contract-review`
@@ -162,6 +178,28 @@ react-patterns -> frontend-design-system -> typescript-patterns -> accessibility
 ```
 
 For React, `react-patterns` is the default implementation/review guide, `frontend-design-system` keeps shared UI primitives and tokens coherent, `typescript-patterns` keeps TS/TSX contracts safe, `accessibility` checks semantic and keyboard behavior, `react-testing` covers user-behavior tests and test layer decisions, `react-performance` is for waterfalls, bundle, hydration, rendering, and interaction performance, and `frontend-build-resolver` handles validation failures.
+
+## Operations And Release Lane
+
+For local or staging stack preparation:
+
+```text
+env-config-management -> docker-compose-ops
+```
+
+When a migration, backfill, import, rewrite, or synchronization changes data:
+
+```text
+database-migrations -> data-reconciliation
+```
+
+For release handoff and the final readiness gate:
+
+```text
+deployment-runbook -> production-readiness-audit
+```
+
+`production-readiness-audit` is the decision point. It must report evidence, blockers, accepted risks, and next actions using one of the skill's defined readiness labels; passing builds or row counts alone are not sufficient evidence.
 
 ## PR And Review Skills
 
@@ -301,6 +339,26 @@ java-patterns review this Java 8 Spring service change
 
 ```text
 java-build-resolver diagnose why this Maven WAR build skips tests
+```
+
+```text
+env-config-management review config and secret handling across local, staging, and production
+```
+
+```text
+docker-compose-ops diagnose why the API service is unhealthy
+```
+
+```text
+data-reconciliation verify the legacy-to-new-system customer migration
+```
+
+```text
+deployment-runbook create the staging deployment and rollback runbook
+```
+
+```text
+production-readiness-audit audit this service before stakeholder testing
 ```
 
 ```text

@@ -18,8 +18,12 @@ This repository stores Codex custom agents, skills, notes, and supporting script
     ├── accessibility/
     ├── api-contract-review/
     ├── coding-standard/
+    ├── data-reconciliation/
     ├── database-migrations/
+    ├── deployment-runbook/
+    ├── docker-compose-ops/
     ├── effective-python/
+    ├── env-config-management/
     ├── error-handling/
     ├── frontend-build-resolver/
     ├── frontend-design-system/
@@ -35,6 +39,7 @@ This repository stores Codex custom agents, skills, notes, and supporting script
     ├── observability-check/
     ├── postgres-patterns/
     ├── pr-summary/
+    ├── production-readiness-audit/
     ├── python-lint-workflow/
     ├── python-patterns/
     ├── python-testing/
@@ -61,8 +66,12 @@ Available skills in the `skills/` directory:
 - `accessibility`: applies practical web accessibility guidance for semantic HTML, keyboard and focus behavior, forms, ARIA, color and contrast, dynamic UI, WCAG-aligned behavior, and testable UI outcomes.
 - `api-contract-review`: reviews backend API compatibility for endpoints, request and response shapes, status codes, error models, validation, auth or tenant boundaries, pagination, versioning, generated contracts, and contract tests.
 - `coding-standard`: applies Go, Rust, and Python coding standards for implementation, refactoring, review quality, naming, formatting, typing, linting setup, and contributor conventions. It coordinates language pattern, testing, lint, and build/check skills when relevant.
+- `data-reconciliation`: compares source and target data for migrations, backfills, imports, exports, rewrites, ETL, and synchronization using counts, identity mapping, financial or quantity checks, deterministic sampling, and explicit mismatch classification.
 - `database-migrations`: applies production-safe migration practices for PostgreSQL, MySQL/MariaDB, and common ORM migration tools, including rollout, rollback, backfills, indexes, constraints, and zero-downtime changes.
+- `deployment-runbook`: creates and reviews human-followable deployment runbooks with prerequisites, environment preparation, deploy and restart commands, validation, rollback, troubleshooting, and handoff guidance.
+- `docker-compose-ops`: operates and troubleshoots Docker Compose stacks through entrypoint discovery, scoped startup, service health, logs, rebuilds, dependencies, ports, volumes, and safe database or cache handling.
 - `effective-python`: applies deeper Python idiom and design judgment for API clarity, data modeling, iteration, resource lifecycle, exceptions, typing, protocols, object design, imports, async, performance tradeoffs, and maintainability.
+- `env-config-management`: designs and reviews environment configuration, structured config files, `.env` handling, secrets, defaults, startup validation, and local/staging/production separation.
 - `error-handling`: reviews and designs backend error behavior for validation, auth, database, external service, timeout, retry, worker, transaction, and observable failure paths.
 - `frontend-build-resolver`: diagnoses and fixes scoped frontend lint, typecheck, test, dev-server, build, bundler, SSR/hydration, CSS pipeline, and framework validation failures without broad dependency or config churn.
 - `frontend-design-system`: applies design-system engineering guidance for reusable UI primitives, tokens, variants, theming, responsive behavior, component documentation, and accessible shared components.
@@ -78,6 +87,7 @@ Available skills in the `skills/` directory:
 - `observability-check`: reviews backend logging, metrics, tracing, error context, cardinality, dashboard or alert hooks, and PII or secret leakage risks for operationally important changes.
 - `postgres-patterns`: applies PostgreSQL and Supabase production patterns for schema design, migrations, indexes, query plans, keyset pagination, JSONB, full-text search, transactions, locks, RLS, replicas, and security.
 - `pr-summary`: generates a ready-to-paste pull request title and body from local branch or worktree changes, including JIRA/context/release notes when provided.
+- `production-readiness-audit`: audits build evidence, runtime health, security, data safety, observability, performance, deployment, rollback, and documentation before staging, stakeholder testing, or production cutover.
 - `python-lint-workflow`: runs and interprets Python linting, formatting, import, type-checking, packaging, pre-commit, tox/nox, and CI validation failures while separating new issues from baseline debt.
 - `python-patterns`: applies idiomatic Python backend and application patterns for typing, API boundaries, error handling, data modeling, package organization, dependency management, async/concurrency, testing patterns, tooling, performance tradeoffs, and anti-patterns.
 - `python-testing`: applies practical Python testing strategy for pytest or repository-standard tests, RED/GREEN when appropriate, fixtures, mocks/fakes, async tests, coverage, deterministic state, and scoped validation.
@@ -195,6 +205,16 @@ react-patterns
   -> frontend-build-resolver
 ```
 
+For operational handoff and release readiness, use:
+
+```text
+env-config-management
+  -> docker-compose-ops
+  -> data-reconciliation when data moved or changed shape
+  -> deployment-runbook
+  -> production-readiness-audit
+```
+
 Use `solve-conflict-pr` whenever a PR branch cannot be merged cleanly into its target branch.
 
 Use focused skills directly when the task is centered on one layer:
@@ -219,6 +239,11 @@ Use focused skills directly when the task is centered on one layer:
 - `go-build-resolver` or `rust-build-resolver` when validation fails and needs a minimal fix.
 - `api-contract-review` when client-observable API behavior changes.
 - `database-migrations`, `postgres-patterns`, or `mysql-patterns` for schema, query, transaction, and rollout work.
+- `data-reconciliation` when migrated, imported, backfilled, rewritten, or synchronized data must be proven equivalent beyond row counts.
+- `env-config-management` for environment variables, structured configuration, defaults, secrets, startup validation, and environment drift.
+- `docker-compose-ops` for Compose startup, health, logs, rebuilds, dependencies, ports, volumes, databases, and local stack troubleshooting.
+- `deployment-runbook` for repeatable deployment, restart, validation, rollback, troubleshooting, and operational handoff instructions.
+- `production-readiness-audit` for an evidence-backed readiness decision before staging, stakeholder testing, or production cutover.
 - `error-handling` when failure behavior, retries, timeouts, transactions, or API errors change.
 - `observability-check` when a change affects production debugging, logging, metrics, tracing, alerts, workers, external calls, or critical flows.
 - `security-review` when authentication, authorization, tenant isolation, user input, rendering, secrets, sessions, webhooks, files, third-party integrations, logging, or sensitive data changes.
@@ -233,7 +258,11 @@ Each skill can be invoked explicitly by name, for example:
 /coding-standard
 /accessibility
 /api-contract-review
+/data-reconciliation
 /database-migrations
+/deployment-runbook
+/docker-compose-ops
+/env-config-management
 /error-handling
 /frontend-build-resolver
 /frontend-design-system
@@ -248,6 +277,7 @@ Each skill can be invoked explicitly by name, for example:
 /mysql-patterns
 /observability-check
 /postgres-patterns
+/production-readiness-audit
 /python-patterns
 /effective-python
 /python-testing

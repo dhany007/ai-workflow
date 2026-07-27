@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Reconciliation"
+  short_description: "Compare source and target data."
+  default_prompt: "Use $data-reconciliation to design or validate source-to-target reconciliation."

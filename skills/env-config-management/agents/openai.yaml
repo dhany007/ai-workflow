@@ -1,0 +1,4 @@
+interface:
+  display_name: "Env Config Management"
+  short_description: "Review env config and secrets."
+  default_prompt: "Use $env-config-management to review environment variables and runtime config."
