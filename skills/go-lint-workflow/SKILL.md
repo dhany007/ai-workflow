@@ -47,37 +47,27 @@ If the repository already defines `make lint`, `make test`, `task lint`, or CI-s
 
 ## Recommended golangci-lint Baseline
 
-Start with high-signal linters. Avoid `enable-all` by default.
+Inspect the repository's existing config and installed golangci-lint version before changing configuration. Preserve project-specific linters, exclusions, generated-file handling, build tags, and CI behavior.
 
-Recommended baseline:
+For a new golangci-lint v2 configuration, read and adapt [`assets/.golangci.yml`](assets/.golangci.yml). Place the adapted file at the Go module or repository root as `.golangci.yml`. Do not overwrite an existing config without reviewing and merging its behavior.
 
-```yaml
-linters:
-  disable-all: true
-  enable:
-    - govet
-    - staticcheck
-    - errcheck
-    - ineffassign
-    - unused
-    - gosimple
-    - gofmt
-    - goimports
-    - misspell
-    - revive
-    - errorlint
-    - nilerr
-    - bodyclose
-    - rowserrcheck
-    - sqlclosecheck
-    - gosec
-    - gocritic
-    - unconvert
-    - wastedassign
-    - prealloc
-    - nolintlint
-    - mnd
-    - lll
+The template:
+
+- starts from `linters.default: none`
+- enables high-signal correctness, security, SQL/resource, readability, and maintenance linters
+- keeps tests enabled
+- checks `lll` at 120 characters to avoid horizontal scrolling
+- enables `mnd` for unexplained numeric literals
+- keeps the default `revive` rules while excluding only `package-comments`
+- configures `gofmt` and `goimports` in the v2 `formatters` section
+- reports all findings without per-linter or duplicate caps
+
+Validate configuration before running the full lint:
+
+```bash
+golangci-lint config verify -c .golangci.yml
+golangci-lint linters -c .golangci.yml
+golangci-lint formatters -c .golangci.yml
 ```
 
 Treat style, readability, and complexity linters as guardrails, not as permission for broad incidental refactors.
