@@ -1,0 +1,4 @@
+interface:
+  display_name: "Figma to Code"
+  short_description: "Plan-first Figma implementation"
+  default_prompt: "Use $figma-to-code with a Figma node link to plan and implement this design after my approval."
