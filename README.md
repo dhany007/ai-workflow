@@ -74,7 +74,7 @@ Available skills in the `skills/` directory:
 - `effective-python`: applies deeper Python idiom and design judgment for API clarity, data modeling, iteration, resource lifecycle, exceptions, typing, protocols, object design, imports, async, performance tradeoffs, and maintainability.
 - `env-config-management`: designs and reviews environment configuration, structured config files, `.env` handling, secrets, defaults, startup validation, and local/staging/production separation.
 - `error-handling`: reviews and designs backend error behavior for validation, auth, database, external service, timeout, retry, worker, transaction, and observable failure paths.
-- `figma-to-code`: implements an exact Figma node or frame in the current web project through Figma inspection, repository-native reuse, an approval-required responsive implementation plan, and visual validation.
+- `figma-to-code`: implements one or more Figma nodes or frames for a feature in the current web project through Figma inspection, repository-native reuse, an approval-required responsive implementation plan, and visual validation per frame.
 - `frontend-build-resolver`: diagnoses and fixes scoped frontend lint, typecheck, test, dev-server, build, bundler, SSR/hydration, CSS pipeline, and framework validation failures without broad dependency or config churn.
 - `frontend-design-system`: applies design-system engineering guidance for reusable UI primitives, tokens, variants, theming, responsive behavior, component documentation, and accessible shared components.
 - `go-build-resolver`: diagnoses and fixes scoped Go build, test, vet, module, lint, compile, and `golangci-lint` failures without broad unrelated refactors.
@@ -207,7 +207,7 @@ react-patterns
   -> frontend-build-resolver
 ```
 
-For an approved implementation from a supplied Figma node or frame, use:
+For an approved implementation from one or more supplied Figma nodes or frames, use:
 
 ```text
 figma-to-code
