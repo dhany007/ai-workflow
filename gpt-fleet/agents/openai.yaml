@@ -1,0 +1,4 @@
+interface:
+  display_name: "GPT Fleet"
+  short_description: "Main-thread-only Luna xhigh fleet orchestration"
+  default_prompt: "Use $gpt-fleet to implement this task with Luna workers and main-thread final review."
