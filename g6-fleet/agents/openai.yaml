@@ -1,0 +1,4 @@
+interface:
+  display_name: "G6 Fleet"
+  short_description: "GPT-6 Luna xhigh fleet with main-thread review"
+  default_prompt: "Use $g6-fleet to implement this task with Luna workers and main-thread final review."
