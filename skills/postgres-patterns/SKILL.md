@@ -117,6 +117,33 @@ Avoid adding indexes blindly. Every index increases write cost, migration time, 
 
 ## Query Patterns
 
+### SQL Formatting
+
+Format non-trivial SQL so its structure is easy to scan and review:
+
+- Put each major clause (`SELECT`, `FROM`, `WHERE`, `JOIN`, `GROUP BY`, `HAVING`, `ORDER BY`, `LIMIT`, and `RETURNING`) on its own line.
+- Put each selected or updated column on its own line when the list is long enough to wrap; indent continuation lines consistently.
+- Put each independent predicate on its own line and start continuation predicates with `AND` or `OR`.
+- Indent nested queries and CTE bodies one level. Keep the closing parenthesis aligned with the statement or expression that opened it.
+- Use uppercase SQL keywords and stable, descriptive aliases. Prefer explicit column lists in application queries over `*`.
+- Keep short, simple statements compact when adding line breaks would not improve readability. Follow existing repository conventions if they are consistent.
+
+Example:
+
+```sql
+SELECT
+    o.id,
+    o.created_at,
+    c.name AS customer_name
+FROM orders AS o
+JOIN customers AS c
+    ON c.id = o.customer_id
+WHERE o.status = $1
+    AND o.created_at >= $2
+ORDER BY o.created_at DESC, o.id DESC
+LIMIT 50;
+```
+
 ### Upsert
 
 ```sql
@@ -179,7 +206,8 @@ CREATE INDEX idx_articles_search
 
 SELECT id, title
 FROM articles
-WHERE to_tsvector('english', title || ' ' || body) @@ plainto_tsquery('english', $1)
+WHERE to_tsvector('english', title || ' ' || body)
+    @@ plainto_tsquery('english', $1)
 LIMIT 20;
 ```
 
@@ -198,8 +226,13 @@ WHERE id = ANY($1)
 ORDER BY id
 FOR UPDATE;
 
-UPDATE accounts SET balance = balance - $2 WHERE id = $3;
-UPDATE accounts SET balance = balance + $2 WHERE id = $4;
+UPDATE accounts
+SET balance = balance - $2
+WHERE id = $3;
+
+UPDATE accounts
+SET balance = balance + $2
+WHERE id = $4;
 
 COMMIT;
 ```
@@ -216,7 +249,9 @@ Queue-style worker claim:
 
 ```sql
 UPDATE jobs
-SET status = 'processing', started_at = now()
+SET
+    status = 'processing',
+    started_at = now()
 WHERE id = (
     SELECT id
     FROM jobs
@@ -225,7 +260,7 @@ WHERE id = (
     LIMIT 1
     FOR UPDATE SKIP LOCKED
 )
-RETURNING *;
+RETURNING id, status, started_at;
 ```
 
 Use `SKIP LOCKED` only for queue-like workloads where skipping locked rows is acceptable.
@@ -285,9 +320,33 @@ Useful first-pass reads:
 
 ```sql
 SELECT version();
-SELECT * FROM pg_stat_activity;
-SELECT * FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 20;
-SELECT relname, n_dead_tup, last_vacuum, last_autovacuum
+SELECT
+    pid,
+    usename,
+    application_name,
+    state,
+    wait_event_type,
+    wait_event,
+    query_start,
+    query
+FROM pg_stat_activity
+ORDER BY query_start DESC;
+
+SELECT
+    queryid,
+    calls,
+    mean_exec_time,
+    rows,
+    query
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC
+LIMIT 20;
+
+SELECT
+    relname,
+    n_dead_tup,
+    last_vacuum,
+    last_autovacuum
 FROM pg_stat_user_tables
 ORDER BY n_dead_tup DESC;
 ```
@@ -323,7 +382,9 @@ Example hardening shape:
 ```sql
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 GRANT USAGE ON SCHEMA app TO app_user;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA app TO app_user;
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA app
+TO app_user;
 ```
 
 ## Configuration

@@ -1,6 +1,6 @@
 ---
 name: frontend-build-resolver
-description: Resolve frontend lint, typecheck, test, dev-server, and production build failures from prompts such as "frontend-build-resolver", "/frontend-build-resolver", "fix frontend build", "pnpm build failed", "npm run typecheck failed", "Vite build failed", "Next.js build failed", "ESLint failed", "Vitest failed", "Jest failed", "Playwright failed", "Cypress failed", "hydration error", "module resolution error", or when React, TypeScript, TSX, CSS, PostCSS, Tailwind, bundler, SSR, routing, or frontend test validation fails. Use when Codex should reproduce the failure, classify the root cause, make a minimal scoped fix, and rerun focused validation without broad dependency or config churn.
+description: Resolve web frontend lint, typecheck, test, dev-server, bundler, SSR, CSS, or production build failures with a minimal scoped fix. Use for browser apps; use react-native-patterns for Metro, native build, and React Native runtime failures.
 ---
 
 # Frontend Build Resolver

@@ -1,6 +1,6 @@
 ---
 name: accessibility
-description: Apply practical web accessibility guidance from prompts such as "accessibility", "/accessibility", "a11y review", "make this UI accessible", "fix keyboard navigation", "review ARIA", "WCAG", "screen reader", "focus management", or when Codex is implementing, testing, or reviewing user interfaces, forms, modals, dialogs, menus, tabs, navigation, tables, media, color, contrast, semantic HTML, keyboard behavior, accessible names, and dynamic UI announcements. Use when Codex should prioritize semantic HTML, keyboard support, focus management, labels, ARIA only when needed, WCAG-aligned behavior, and testable accessibility outcomes.
+description: Apply accessibility guidance to web interfaces, including semantic HTML, keyboard and focus behavior, forms, ARIA, contrast, and screen-reader announcements. Use for web UI; use react-native-patterns for VoiceOver and TalkBack behavior in native apps.
 ---
 
 # Accessibility

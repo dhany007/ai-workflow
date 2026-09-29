@@ -60,6 +60,7 @@ Assign each `stack-reviewer` a bounded file set and explicitly name the relevant
 | Java | `java-patterns`; add `java-build-resolver` only for observed validation failures and Java legacy skills only for legacy/rewrite scope |
 | Python | `python-patterns`, `effective-python`, `python-testing`, `python-lint-workflow` |
 | React/TypeScript | `react-patterns`, `typescript-patterns`, `accessibility`, `react-testing`, `react-performance`; add `frontend-build-resolver` only for observed validation failures |
+| React Native | `react-native-patterns`, `typescript-patterns` when TypeScript is used; native accessibility and test guidance come from `react-native-patterns` |
 
 Give agents the PR/base/head identifiers, user context, raw diff or changed-file scope, and repository paths needed to rebuild context. Do not leak suspected findings or an intended verdict into their prompts. Keep every agent read-only.
 

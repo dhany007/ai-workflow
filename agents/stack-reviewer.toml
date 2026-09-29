@@ -14,6 +14,7 @@ Use these default lanes when assigned:
 - Java: java-patterns and java-build-resolver only for observed validation failures. Use Java legacy skills only when the parent explicitly assigns legacy discovery or migration parity.
 - Python: python-patterns, effective-python, python-testing, and python-lint-workflow.
 - React/TypeScript: react-patterns, typescript-patterns, accessibility, react-testing, react-performance, and frontend-build-resolver only for observed validation failures.
+- React Native: react-native-patterns and typescript-patterns when the app uses TypeScript. Use native accessibility and test guidance from react-native-patterns; use frontend-build-resolver only for a separate web target.
 
 Inspect repository versions, configuration, neighboring code, tests, and established conventions before judging idioms. Do not assume the newest language or framework feature is available. Separate newly introduced problems from existing baseline debt.
 

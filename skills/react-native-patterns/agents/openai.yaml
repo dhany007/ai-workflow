@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Native Patterns"
+  short_description: "React Native mobile implementation and review"
+  default_prompt: "Use $react-native-patterns for this React Native app change, following its Expo or bare workflow and native platform conventions."

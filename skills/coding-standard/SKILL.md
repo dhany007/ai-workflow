@@ -1,6 +1,6 @@
 ---
 name: coding-standard
-description: Apply coding standards for Go, Rust, and Python projects from prompts such as "coding-standard", "/coding-standard", "implement this feature", "implement this tech plan", "continue from tech-plan", "implement a Go feature", "implement a Rust feature", "implement a Python feature", "review code quality", "refactor to coding standard", "set up linting", "enforce naming conventions", or "onboard contributors". Use implicitly when Codex is creating, modifying, reviewing, or refactoring Go, Rust, or Python code, especially after a tech-plan Markdown file exists, for new features/modules, code quality and maintainability review, naming/formatting/structural consistency, linting/formatting/type-checking setup, contributor convention guidance, Go idioms via go-patterns, Rust idioms via rust-patterns, Python idioms via python-patterns and effective-python, Python test strategy via python-testing, and scoped lint/build/test workflows that follow repository conventions.
+description: Apply shared, repository-aware coding standards for Go, Rust, and Python when a task needs cross-cutting maintainability guidance, contributor conventions, or toolchain setup. Use the language-specific pattern, testing, lint, and build skills for focused work; this skill does not cover Java or frontend code.
 ---
 
 # Coding Standard
@@ -66,11 +66,11 @@ Apply these principles before language-specific preferences:
 
 ## During Feature Implementation
 
-When implementing Go, Rust, or Python features, apply this skill even if the user does not explicitly say `coding-standard`.
+Use this skill for shared standards, contributor onboarding, toolchain setup, or cross-cutting maintainability decisions. Do not load it solely because a Go, Rust, or Python file changed; use the focused language and validation skills for that work and apply these principles as relevant.
 
-- If the user says `implement this feature`, `implement this tech plan`, or similar after a `tech-plan`, read the relevant tech plan Markdown file and apply this skill automatically.
-- Treat a `tech-plan` file's `Implementation Handoff` section as an instruction to follow coding standards during implementation.
-- When a TDD workflow is active, apply coding standards during the GREEN/refactor stage without skipping RED/GREEN validation.
+- When the user asks to implement a feature from a `tech-plan`, read the relevant plan and use this skill only for standards decisions that cross language-specific guidance.
+- Treat a `tech-plan` file's `Implementation Handoff` section as task context, not as a reason to broaden scope.
+- When `tdd-workflow` is active, apply coding standards during GREEN/refactor without skipping RED/GREEN validation.
 - Start from the smallest design that satisfies the requested behavior.
 - Follow the surrounding package/module/crate structure before introducing a new abstraction.
 - Name new types, functions, traits, modules, packages, and crates for their current responsibility, not future possibilities.

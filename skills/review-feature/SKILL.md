@@ -42,6 +42,7 @@ Determine review scope from the prompt:
    - For Java changes, use `java-patterns`; use `java-build-resolver` only for observed compile, test, Maven/Gradle, profile, dependency, WAR, or classpath failures.
    - For Python changes, use `python-patterns`, `effective-python`, `python-testing`, and `python-lint-workflow` according to the changed behavior and configured tooling.
    - For React/TypeScript changes, use `react-patterns`, `typescript-patterns`, `accessibility`, `react-testing`, and `react-performance`; use `frontend-build-resolver` only for observed validation failures.
+   - For React Native changes, use `react-native-patterns` and `typescript-patterns` when the app uses TypeScript. Use native accessibility and testing guidance from `react-native-patterns`; reserve web frontend skills for a separate web target.
    - For validation failures, API errors, database errors, external service failures, timeouts, retries, cancellation, workers, jobs, or observable failure behavior, use `error-handling` to review classification, propagation, boundary mapping, retry safety, logging privacy, and error-path test coverage.
    - For client-observable API request, response, error, auth, pagination, idempotency, or generated contract changes, use `api-contract-review` to review backward compatibility and contract-test coverage.
    - For operationally important endpoints, workers, jobs, external calls, migrations/backfills, critical flows, retries, or concurrency, use `observability-check` to review production debuggability, logs, metrics, tracing/telemetry, and PII/secret safety.
@@ -60,6 +61,7 @@ Treat `review-feature` as sufficient authorization to orchestrate read-only revi
 - Skip agents only for a clearly trivial, low-risk change.
 - Spawn `code-reviewer` for non-trivial language-neutral review.
 - Spawn one `stack-reviewer` per materially changed Go, Rust, Java, Python, or React/TypeScript stack and explicitly assign the matching skill lane.
+- For React Native files, assign a React Native lane with `react-native-patterns` rather than the React web lane.
 - Spawn `architect` only for cross-module boundaries, public contracts, schema or migration strategy, transaction/consistency changes, deployment topology, major integrations, legacy rewrite parity, or durable design decisions.
 
 Run independent agents in parallel and keep them read-only. Give them the base, head/worktree scope, user context, raw changed-file evidence, and relevant skill names without leaking suspected findings. Wait for all requested agents, then verify locations and failure modes, deduplicate findings, reconcile severity, and own final validation.

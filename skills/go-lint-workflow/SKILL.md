@@ -51,6 +51,8 @@ Inspect the repository's existing config and installed golangci-lint version bef
 
 For a new golangci-lint v2 configuration, read and adapt [`assets/.golangci.yml`](assets/.golangci.yml). Place the adapted file at the Go module or repository root as `.golangci.yml`. Do not overwrite an existing config without reviewing and merging its behavior.
 
+When setting up linting in a Go repository that has no configuration, create the adapted `.golangci.yml` as part of the setup. Keep `lll` enabled with the template's 120-character limit, and verify activation with `golangci-lint linters -c .golangci.yml` before reporting that line-length linting ran. Do not infer that `lll` ran merely because `golangci-lint run` completed without a configuration file.
+
 The template:
 
 - starts from `linters.default: none`

@@ -1,6 +1,6 @@
 ---
 name: react-patterns
-description: Apply practical React frontend engineering patterns from prompts such as "react-patterns", "/react-patterns", "implement React component", "review React code", "refactor TSX", "fix hooks", "design React state", "build React UI", or when Codex is planning, implementing, testing, or reviewing React, JSX, TSX, hooks, component composition, forms, accessibility, client/server boundaries, data fetching, and state management. Use when Codex should produce maintainable React 18/19 code while following the repository's framework, router, styling, state, data, testing, linting, and TypeScript conventions.
+description: Apply practical React web patterns for React DOM, JSX/TSX, hooks, forms, browser data flow, and server/client boundaries. Use for web components and frontend work; use react-native-patterns for native iOS or Android apps.
 ---
 
 # React Patterns

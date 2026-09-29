@@ -1,6 +1,6 @@
 ---
 name: frontend-design-system
-description: Apply frontend design-system engineering guidance from prompts such as "frontend-design-system", "/frontend-design-system", "build design system", "review UI primitives", "create component variants", "design tokens", "theme tokens", "dark mode", "responsive component", "component library", "Storybook", "Tailwind tokens", or when Codex is implementing, refactoring, or reviewing reusable UI primitives, tokens, typography, color, spacing, variants, theming, responsive behavior, visual states, accessibility hooks, and component documentation in React or other frontend apps. Use when Codex should keep UI consistent, reusable, accessible, token-driven, and aligned with the repository's existing design language.
+description: Apply design-system guidance to reusable web UI primitives, design tokens, variants, themes, responsive behavior, and component documentation. Use for browser interfaces; use react-native-patterns for native component and StyleSheet systems.
 ---
 
 # Frontend Design System

@@ -28,6 +28,7 @@ This repository stores Codex custom agents, skills, notes, and supporting script
     ├── figma-to-code/
     ├── frontend-build-resolver/
     ├── frontend-design-system/
+    ├── g6-fleet/
     ├── go-build-resolver/
     ├── go-lint-workflow/
     ├── go-patterns/
@@ -46,6 +47,7 @@ This repository stores Codex custom agents, skills, notes, and supporting script
     ├── python-testing/
     ├── react-patterns/
     ├── react-performance/
+    ├── react-native-patterns/
     ├── react-testing/
     ├── review-feature/
     ├── review-pr/
@@ -66,7 +68,7 @@ Available skills in the `skills/` directory:
 
 - `accessibility`: applies practical web accessibility guidance for semantic HTML, keyboard and focus behavior, forms, ARIA, color and contrast, dynamic UI, WCAG-aligned behavior, and testable UI outcomes.
 - `api-contract-review`: reviews backend API compatibility for endpoints, request and response shapes, status codes, error models, validation, auth or tenant boundaries, pagination, versioning, generated contracts, and contract tests.
-- `coding-standard`: applies Go, Rust, and Python coding standards for implementation, refactoring, review quality, naming, formatting, typing, linting setup, and contributor conventions. It coordinates language pattern, testing, lint, and build/check skills when relevant.
+- `coding-standard`: applies shared Go, Rust, and Python maintainability guidance, repository conventions, and toolchain setup; use language-specific skills for focused patterns, testing, linting, and build work.
 - `data-reconciliation`: compares source and target data for migrations, backfills, imports, exports, rewrites, ETL, and synchronization using counts, identity mapping, financial or quantity checks, deterministic sampling, and explicit mismatch classification.
 - `database-migrations`: applies production-safe migration practices for PostgreSQL, MySQL/MariaDB, and common ORM migration tools, including rollout, rollback, backfills, indexes, constraints, and zero-downtime changes.
 - `deployment-runbook`: creates and reviews human-followable deployment runbooks with prerequisites, environment preparation, deploy and restart commands, validation, rollback, troubleshooting, and handoff guidance.
@@ -77,6 +79,7 @@ Available skills in the `skills/` directory:
 - `figma-to-code`: implements one or more Figma nodes or frames for a feature in the current web project through Figma inspection, repository-native reuse, an approval-required responsive implementation plan, and visual validation per frame.
 - `frontend-build-resolver`: diagnoses and fixes scoped frontend lint, typecheck, test, dev-server, build, bundler, SSR/hydration, CSS pipeline, and framework validation failures without broad dependency or config churn.
 - `frontend-design-system`: applies design-system engineering guidance for reusable UI primitives, tokens, variants, theming, responsive behavior, component documentation, and accessible shared components.
+- `g6-fleet`: coordinates an explicitly requested, single-level GPT-6 Luna implementation fleet; the main thread plans, dispatches, integrates, and reviews.
 - `go-build-resolver`: diagnoses and fixes scoped Go build, test, vet, module, lint, compile, and `golangci-lint` failures without broad unrelated refactors.
 - `go-lint-workflow`: runs and interprets scoped Go linting with `golangci-lint`, `go vet`, and `go fmt`, including `mnd`, `lll`, complexity, and test-file judgment while separating new issues from existing baseline debt.
 - `go-patterns`: applies idiomatic Go backend patterns for error handling, context propagation, interfaces, packages, dependency injection, concurrency, testing, and performance tradeoffs.
@@ -93,9 +96,10 @@ Available skills in the `skills/` directory:
 - `python-lint-workflow`: runs and interprets Python linting, formatting, import, type-checking, packaging, pre-commit, tox/nox, and CI validation failures while separating new issues from baseline debt.
 - `python-patterns`: applies idiomatic Python backend and application patterns for typing, API boundaries, error handling, data modeling, package organization, dependency management, async/concurrency, testing patterns, tooling, performance tradeoffs, and anti-patterns.
 - `python-testing`: applies practical Python testing strategy for pytest or repository-standard tests, RED/GREEN when appropriate, fixtures, mocks/fakes, async tests, coverage, deterministic state, and scoped validation.
-- `react-patterns`: applies practical React frontend engineering patterns for components, hooks, state, data flow, forms, accessibility, TypeScript, server/client boundaries, styling, and maintainability.
+- `react-patterns`: applies practical React web patterns for React DOM, hooks, forms, browser data flow, and server/client boundaries.
 - `react-performance`: reviews React and Next.js performance issues such as waterfalls, bundle size, hydration scope, server/client boundaries, render cascades, long lists, layout stability, and interaction responsiveness.
-- `react-testing`: applies behavior-focused React testing strategy for components, hooks, pages, forms, async UI, accessibility behavior, network interactions, and frontend user flows.
+- `react-native-patterns`: guides Expo and bare React Native implementation, native platform behavior, accessibility, native integrations, testing, Metro, and Android/iOS validation.
+- `react-testing`: applies behavior-focused React DOM testing strategy for web components, hooks, pages, forms, async UI, network interactions, and browser user flows.
 - `review-feature`: reviews local feature work before a PR exists and automatically delegates non-trivial, stack-specific, or architecture-sensitive analysis to read-only custom agents when available.
 - `review-pr`: performs first-pass GitHub pull request reviews and automatically coordinates `code-reviewer`, per-stack `stack-reviewer` instances, and conditional `architect` analysis before consolidating findings.
 - `review-pr-followup`: re-reviews a GitHub pull request after the author pushes updates, then verifies whether prior findings are resolved, partially resolved, unresolved, regressed, or need clarification.
@@ -115,7 +119,7 @@ Each skill lives in its own directory and should include at least a `SKILL.md` f
 Custom agents in `agents/` are Codex-native, read-only specialist roles:
 
 - `code-reviewer`: reviews language-neutral correctness, regressions, security, contracts, data safety, and missing tests using a strict evidence gate.
-- `stack-reviewer`: reviews one assigned Go, Rust, Java, Python, or React/TypeScript stack using the matching skill lane and repository tooling.
+- `stack-reviewer`: reviews one assigned Go, Rust, Java, Python, React/TypeScript, or React Native stack using the matching skill lane and repository tooling.
 - `architect`: analyzes repository-aware boundaries, data flow, contracts, migrations, rewrites, trade-offs, and implementation sequencing without editing code.
 
 The main Codex thread remains the orchestrator. It chooses agents through `review-pr`, `review-feature`, or `tech-plan`, verifies their evidence, removes duplicate findings, and owns the final output. Agent files omit a fixed model so they inherit the active parent configuration, and all three enforce `sandbox_mode = "read-only"`.
@@ -207,6 +211,15 @@ react-patterns
   -> frontend-build-resolver
 ```
 
+For React Native implementation and review, use the native-focused lane:
+
+```text
+react-native-patterns
+  -> typescript-patterns when using TypeScript
+  -> focused component/device tests from the repository's existing tooling
+  -> project-configured Metro and native build checks when relevant
+```
+
 For an approved implementation from one or more supplied Figma nodes or frames, use:
 
 ```text
@@ -239,7 +252,8 @@ Use focused skills directly when the task is centered on one layer:
 - `effective-python` for deeper Python API, object design, typing, resource lifecycle, and maintainability refinement.
 - `python-testing` for Python test strategy, fixtures, mocks/fakes, async tests, RED/GREEN loops, and coverage guidance.
 - `python-lint-workflow` for Ruff, Black, mypy, Pyright, import/package issues, pre-commit hooks, tox/nox, and Python CI validation.
-- `react-patterns` for React components, hooks, state, forms, accessibility, TypeScript, and frontend composition.
+- `react-patterns` for React DOM components, hooks, state, forms, browser data flow, and frontend composition.
+- `react-native-patterns` for Expo or bare React Native screens, native accessibility, platform behavior, native dependencies, tests, Metro, and Android/iOS builds.
 - `frontend-design-system` for reusable UI primitives, tokens, variants, theming, visual states, responsive behavior, and Storybook-style documentation.
 - `typescript-patterns` for TypeScript type design, narrowing, API boundaries, React props, generics, async modeling, and safe TS/TSX refactors.
 - `accessibility` for semantic HTML, keyboard access, focus management, labels, ARIA, contrast, dynamic UI behavior, and WCAG-aligned review.

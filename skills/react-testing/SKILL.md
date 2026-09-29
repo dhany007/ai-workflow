@@ -1,6 +1,6 @@
 ---
 name: react-testing
-description: Apply behavior-focused React testing strategy from prompts such as "react-testing", "/react-testing", "test this React component", "write RTL tests", "fix flaky React test", "review React tests", "test custom hook", "mock React network requests", or when Codex is adding, debugging, or reviewing tests for React components, hooks, pages, forms, async UI, accessibility behavior, network interactions, and frontend user flows. Use when Codex should choose repository-standard Vitest/Jest/Testing Library/MSW/Playwright/Cypress patterns, write user-centered assertions, avoid brittle implementation tests, and run focused validation.
+description: Apply behavior-focused testing strategy to React web components, hooks, pages, forms, and browser user flows using the repository's DOM and E2E tooling. Use react-native-patterns for React Native Testing Library and native app tests.
 ---
 
 # React Testing
