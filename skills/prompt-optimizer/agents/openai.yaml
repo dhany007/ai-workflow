@@ -1,0 +1,6 @@
+interface:
+  display_name: "Prompt Optimizer"
+  short_description: "Turn rough requests into focused Codex prompts"
+  default_prompt: "Use $prompt-optimizer to refine this task into a clear Codex prompt."
+policy:
+  allow_implicit_invocation: false

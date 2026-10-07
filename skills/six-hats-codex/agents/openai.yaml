@@ -1,0 +1,6 @@
+interface:
+  display_name: "Six Hats for Codex"
+  short_description: "Pressure-test consequential decisions with six lenses"
+  default_prompt: "Use $six-hats-codex to analyze this decision: [decision and key constraints]."
+policy:
+  allow_implicit_invocation: false

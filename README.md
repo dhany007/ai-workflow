@@ -41,6 +41,7 @@ This repository stores Codex custom agents, skills, notes, and supporting script
     ├── observability-check/
     ├── postgres-patterns/
     ├── pr-summary/
+    ├── prompt-optimizer/
     ├── production-readiness-audit/
     ├── python-lint-workflow/
     ├── python-patterns/
@@ -56,6 +57,7 @@ This repository stores Codex custom agents, skills, notes, and supporting script
     ├── rust-lint-workflow/
     ├── rust-patterns/
     ├── security-review/
+    ├── six-hats-codex/
     ├── solve-conflict-pr/
     ├── tdd-workflow/
     ├── tech-plan/
@@ -92,6 +94,7 @@ Available skills in the `skills/` directory:
 - `observability-check`: reviews backend logging, metrics, tracing, error context, cardinality, dashboard or alert hooks, and PII or secret leakage risks for operationally important changes.
 - `postgres-patterns`: applies PostgreSQL and Supabase production patterns for schema design, migrations, indexes, query plans, keyset pagination, JSONB, full-text search, transactions, locks, RLS, replicas, and security.
 - `pr-summary`: generates a ready-to-paste pull request title and body from local branch or worktree changes, including JIRA/context/release notes when provided.
+- `prompt-optimizer`: rewrites an explicitly provided rough software request into a scoped, copy-ready Codex prompt using relevant skills and repository conventions; it does not execute the task.
 - `production-readiness-audit`: audits build evidence, runtime health, security, data safety, observability, performance, deployment, rollback, and documentation before staging, stakeholder testing, or production cutover.
 - `python-lint-workflow`: runs and interprets Python linting, formatting, import, type-checking, packaging, pre-commit, tox/nox, and CI validation failures while separating new issues from baseline debt.
 - `python-patterns`: applies idiomatic Python backend and application patterns for typing, API boundaries, error handling, data modeling, package organization, dependency management, async/concurrency, testing patterns, tooling, performance tradeoffs, and anti-patterns.
@@ -107,6 +110,7 @@ Available skills in the `skills/` directory:
 - `rust-lint-workflow`: runs and interprets scoped Rust validation with `cargo fmt`, `cargo check`, `cargo clippy`, and tests, while separating new warnings from existing workspace debt.
 - `rust-patterns`: applies idiomatic Rust backend patterns for ownership, borrowing, errors, enums, traits, modules, async/concurrency, unsafe boundaries, testing, and performance tradeoffs.
 - `security-review`: reviews application security risks for authentication, authorization, tenant boundaries, input/output handling, XSS, CSRF, injection, secrets, sessions, cookies, files, webhooks, third-party integrations, logging, and sensitive data.
+- `six-hats-codex`: runs an explicitly requested, multi-agent decision analysis that separates facts, intuition, benefits, risks, alternatives, and synthesis; it stops before implementation.
 - `solve-conflict-pr`: resolves GitHub pull request merge conflicts by reproducing the conflict locally, preserving behavior from both sides, and running focused validation.
 - `tdd-workflow`: implements backend Go or Rust features, fixes, and refactors with a RED/GREEN/refactor test-driven workflow, using language-specific patterns, error handling guidance, lint workflows, and build resolvers during implementation and validation.
 - `tech-plan`: creates backend-only technical implementation plans before coding and conditionally consults `architect` for material boundary, contract, data, migration, integration, deployment, or legacy-rewrite decisions.
@@ -238,6 +242,8 @@ env-config-management
   -> deployment-runbook
   -> production-readiness-audit
 ```
+
+For a consequential or hard-to-reverse decision that needs independent perspectives, invoke `$six-hats-codex`. It returns a decision brief and does not implement or apply a proposed change.
 
 Use `solve-conflict-pr` whenever a PR branch cannot be merged cleanly into its target branch.
 
