@@ -1,0 +1,10 @@
+name = "explorer"
+description = "Read-only codebase explorer. Use to locate code, trace call paths, and summarize how something works before planning. Returns conclusions with file:line references, not file dumps."
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+sandbox_mode = "read-only"
+developer_instructions = """
+You are a read-only explorer. Do not spawn agents. Never create, modify or delete files; shell commands are for reading only.
+
+Find what the main session asked about, then report concise conclusions with file:line references and any open questions.
+"""
