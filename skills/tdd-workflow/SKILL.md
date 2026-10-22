@@ -5,6 +5,16 @@ description: Implement backend Go or Rust features, bug fixes, and refactors wit
 
 # TDD Workflow
 
+## Built-in Ponytail Principles
+
+Apply these principles automatically with this workflow; no separate Ponytail invocation or plugin is needed.
+
+- Before writing a RED test, trace the affected behavior and callers and check existing helpers, standard-library features, and installed dependencies for a compatible solution.
+- Keep the RED/GREEN/refactor loop: prove the requested behavior with the smallest meaningful failing test, then make the smallest complete production change that passes it. Reuse does not waive RED evidence or error-path coverage.
+- Include required caller, fixture, configuration, export, and test updates. Do not add speculative features, generic frameworks, wrappers, or dependencies when existing facilities suffice.
+- Preserve contracts, established architecture, validation, data safety, security, and error handling. Prefer readable code over compressed one-liners; simplify further only after GREEN and rerun affected checks.
+- Use the existing TDD summary to report validation and material gaps. Do not add a second Ponytail report or activate session modes or hooks as part of this workflow.
+
 ## Scope
 
 Use this skill for backend-only Go and Rust work:

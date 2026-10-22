@@ -5,6 +5,18 @@ description: Review local feature work before a pull request exists from prompts
 
 # Review Feature
 
+## Built-in Ponytail Review Principles
+
+Apply these checks whenever this skill is used, without requiring a separate Ponytail invocation or plugin. Include them in delegated review scope when agents are used.
+
+- Trace the affected flow and callers before judging the diff. Check required caller, test, fixture, configuration, and export updates for completeness.
+- Check whether the change duplicates a compatible repository helper, standard-library/platform feature, or installed dependency, or adds unrequested features, wrappers, abstractions, or dependencies.
+- Report simplification opportunities as findings only when there is a concrete correctness, maintenance, dependency, or operational cost. State the evidence, impact, and smallest compatible fix; do not treat line count or a style preference as a defect.
+- Keep correctness, data safety, security, contract compatibility, accessibility, and meaningful tests ahead of reducing code. Never recommend deleting safeguards or bypassing established boundaries solely to shorten the diff.
+- Preserve review-only mode unless fixes are explicitly requested. In resolve mode, make only confirmed scoped fixes and run focused validation; use the existing findings and test-gap output rather than an additional Ponytail report.
+
+These checks do not activate Ponytail session modes or hooks, expand the review to the whole repository, or authorize external actions.
+
 ## Input Handling
 
 Accept loose, team-style prompts. Treat any of these as valid triggers:

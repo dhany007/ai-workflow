@@ -5,6 +5,18 @@ description: Apply shared, repository-aware coding standards for Go, Rust, and P
 
 # Coding Standard
 
+## Built-in Ponytail Principles
+
+Apply these principles whenever this skill is used, without requiring a separate Ponytail invocation or installed plugin. They apply within this skill's existing language and task scope.
+
+- Read the affected flow and callers before choosing a solution; include required updates to callers, tests, fixtures, configuration, and exports.
+- Prefer, in order: existing repository code and conventions, the standard library or platform features, an already installed dependency, then the smallest readable new implementation that fully meets the request.
+- Omit unrequested features and speculative abstractions, wrappers, options, and dependencies. Preserve established boundaries and interfaces; fewer lines alone do not justify a rewrite or dependency change.
+- Preserve requested behavior, trust-boundary validation, protection against data loss, error handling, security, and accessibility wherever applicable. Reuse is appropriate only when it meets these requirements.
+- Validate changed behavior with focused checks using the relevant language/testing skill. State material limitations or checks not run without inventing evidence or adding a mandatory report for trivial changes.
+
+These are embedded implementation principles, not a request to activate Ponytail session modes, hooks, extra commands, or external actions.
+
 ## References
 
 Use these as primary language references:
