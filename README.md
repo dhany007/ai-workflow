@@ -2,6 +2,32 @@
 
 This repository stores Codex custom agents, skills, notes, and supporting scripts for AI-assisted development workflows.
 
+## Install on Another Laptop
+
+Install Python 3.9+, Git, Node.js, and a Codex CLI version that supports `codex plugin`. Ensure `python` (or `python3`), `git`, `node`, and `codex` are on your terminal's PATH. Clone this repository, then run from its root:
+
+```bash
+python scripts/install.py
+```
+
+On Linux/macOS/WSL, use `python3 scripts/install.py` if Python is named `python3`. No Python packages or `make` are required. The command installs all repository skills, custom agents, and notes into `$CODEX_HOME` or, when unset, your user's `~/.codex`. It also registers the official [Ponytail marketplace](https://github.com/DietrichGebert/ponytail) and installs/enables its plugin through Codex CLI. Network access is needed to download Ponytail. On Windows, run in PowerShell for Windows Codex; run inside WSL only to install into WSL's separate Codex home.
+
+The installer preserves unrelated files and `.system` skills. Before replacing different files with repository versions, it saves the previous files under `<Codex home>/backups/ai-workflow-<timestamp>-<unique suffix>/`. Identical files are skipped. An installed and enabled Ponytail is left at its current version. You can rerun after a failure; partial installation is reported rather than claimed as complete. Plugin configuration is managed by Codex CLI, separate from workflow file backups.
+
+Preview local file changes without writes or plugin commands:
+
+```bash
+python scripts/install.py --dry-run
+```
+
+After installation, restart Codex and start a new chat. For Ponytail's automatic lifecycle hooks, open `/hooks` in Codex CLI and review/trust the plugin's hooks as described in [Ponytail's installation guide](https://github.com/DietrichGebert/ponytail/blob/main/INSTALL.md). The installer does not automatically approve hooks. The embedded Ponytail principles in `coding-standard`, `tdd-workflow`, and `review-feature` work when those skills are used, even without hooks.
+
+To check the installer offline:
+
+```bash
+python -m unittest discover -s scripts -p test_install.py
+```
+
 ## Project Structure
 
 ```text
@@ -13,6 +39,8 @@ This repository stores Codex custom agents, skills, notes, and supporting script
 ├── notes/
 ├── scripts/
 │   ├── sync-agents-from-codex.sh
+│   ├── install.py
+│   ├── test_install.py
 │   └── sync-from-codex.sh
 └── skills/
     ├── accessibility/
